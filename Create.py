@@ -1,25 +1,38 @@
 import json
-
+#Add Laptop to the JSON file
 def add_laptop():
 	print("Enter new laptop details:")
 	laptop = {}
+	#Enter Laptop ID 
 	laptop['id'] = input("ID: ")
+	#Validate that Laptop ID is not empty
+	if not laptop['id']:
+		print("Error: ID must not be empty.")
+		return
 	laptop['brand'] = input("Brand: ")
+	if not laptop['brand']:
+		print("Error: Brand must not be empty.")
+		return
 	laptop['model'] = input("Model: ")
+	if not laptop['model']:
+		print("Error: Model must not be empty.")
+		return
 	laptop['processor'] = input("Processor: ")
+	if not laptop['processor']:
+		print("Error: Processor must not be empty.")
+		return
 	try:
 		laptop['ram_gb'] = int(input("RAM (GB): "))
 	except ValueError:
 		laptop['ram_gb'] = 0
-	storage_type = input("Storage Type (e.g., SSD/HDD): ")
 	try:
-		storage_capacity = int(input("Storage Capacity (GB): "))
+		storage_capacity = int(input("Storage Size (GB): "))
 	except ValueError:
 		storage_capacity = 0
-	laptop['storage'] = {
-		'type': storage_type,
-		'capacity_gb': storage_capacity
-	}
+	laptop['storage-size_gb'] = storage_capacity
+	# Betriebssystem: 0 = Windows, 1 = MacOS
+	os_input = input("Is this a MacOS device? (y/n): ").strip().lower()
+	laptop['is_macos'] = os_input == 'y'
 
 	# Load existing data
 	try:

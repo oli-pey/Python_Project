@@ -1,48 +1,24 @@
 {
   "laptops": [
-    {
-      "id": "LAP002",
-      "brand": "HP",
-      "model": "EliteBook 840 G8",
-      "processor": "Intel Core i7-1165G7",
-      "ram_gb": 32,
-      "storage": {
-        "type": "SSD",
-        "capacity_gb": 1024
-      }
-    },
-    {
-      "id": "LAP003",
-      "brand": "Lenovo",
-      "model": "ThinkPad X1 Carbon Gen 9",
-      "processor": "Intel Core i5-1145G7",
-      "ram_gb": 16,
-      "storage": {
-        "type": "SSD",
-        "capacity_gb": 256
-      }
-    },
-    {
-      "id": "LAP004",
-      "brand": "Apple",
-      "model": "MacBook Pro 14\"",
-      "processor": "Apple M1 Pro",
-      "ram_gb": 16,
-      "storage": {
-        "type": "SSD",
-        "capacity_gb": 512
-      }
-    },
-    {
-      "id": "\u001b\u001b[3~",
-      "brand": "",
-      "model": "",
-      "processor": "",
-      "ram_gb": 0,
-      "storage": {
-        "type": "",
-        "capacity_gb": 0
-      }
-    }
+    {"id": "LAP001", "brand": "HP", "model": "EliteBook 840 G8", "processor": "Intel Core i7-1165G7", "is_macos": false, "ram_gb": 32, "storage-size_gb": 1024},
+    {"id": "LAP002", "brand": "Apple", "model": "MacBook Pro 14", "processor": "Apple M1 Pro", "is_macos": true, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP003", "brand": "Lenovo", "model": "ThinkPad X1 Carbon Gen 9", "processor": "Intel Core i5-1145G7", "is_macos": false, "ram_gb": 16, "storage-size_gb": 256},
+    {"id": "LAP004", "brand": "Apple", "model": "MacBook Air M2", "processor": "Apple M2", "is_macos": true, "ram_gb": 8, "storage-size_gb": 256},
+    {"id": "LAP005", "brand": "Dell", "model": "XPS 13 9310", "processor": "Intel Core i7-1185G7", "is_macos": false, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP006", "brand": "Apple", "model": "MacBook Pro 16", "processor": "Apple M1 Max", "is_macos": true, "ram_gb": 32, "storage-size_gb": 1024},
+    {"id": "LAP007", "brand": "Acer", "model": "Swift 5", "processor": "Intel Core i5-1135G7", "is_macos": false, "ram_gb": 8, "storage-size_gb": 512},
+    {"id": "LAP008", "brand": "Apple", "model": "MacBook Air M1", "processor": "Apple M1", "is_macos": true, "ram_gb": 8, "storage-size_gb": 256},
+    {"id": "LAP009", "brand": "Asus", "model": "ZenBook 14", "processor": "AMD Ryzen 7 5800U", "is_macos": false, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP010", "brand": "Apple", "model": "MacBook Pro 13", "processor": "Apple M2", "is_macos": true, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP011", "brand": "HP", "model": "Spectre x360 14", "processor": "Intel Core i7-1165G7", "is_macos": false, "ram_gb": 16, "storage-size_gb": 1024},
+    {"id": "LAP012", "brand": "Apple", "model": "MacBook Air 13", "processor": "Apple M2", "is_macos": true, "ram_gb": 8, "storage-size_gb": 256},
+    {"id": "LAP013", "brand": "Microsoft", "model": "Surface Laptop 4", "processor": "AMD Ryzen 5 4680U", "is_macos": false, "ram_gb": 8, "storage-size_gb": 256},
+    {"id": "LAP014", "brand": "Apple", "model": "MacBook Pro 15", "processor": "Apple M1 Pro", "is_macos": true, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP015", "brand": "Lenovo", "model": "Yoga Slim 7", "processor": "Intel Core i7-1165G7", "is_macos": false, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP016", "brand": "Apple", "model": "MacBook Air 15", "processor": "Apple M2", "is_macos": true, "ram_gb": 8, "storage-size_gb": 512},
+    {"id": "LAP017", "brand": "Dell", "model": "Latitude 7420", "processor": "Intel Core i5-1145G7", "is_macos": false, "ram_gb": 8, "storage-size_gb": 256},
+    {"id": "LAP018", "brand": "Apple", "model": "MacBook Pro 16 M2", "processor": "Apple M2 Max", "is_macos": true, "ram_gb": 64, "storage-size_gb": 2048},
+    {"id": "LAP019", "brand": "HP", "model": "Elite Dragonfly G2", "processor": "Intel Core i7-1165G7", "is_macos": false, "ram_gb": 16, "storage-size_gb": 512},
+    {"id": "LAP020", "brand": "Apple", "model": "MacBook Air 13 M1", "processor": "Apple M1", "is_macos": true, "ram_gb": 8, "storage-size_gb": 256}
   ]
 }
