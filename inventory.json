@@ -1,0 +1,48 @@
+{
+  "laptops": [
+    {
+      "id": "LAP002",
+      "brand": "HP",
+      "model": "EliteBook 840 G8",
+      "processor": "Intel Core i7-1165G7",
+      "ram_gb": 32,
+      "storage": {
+        "type": "SSD",
+        "capacity_gb": 1024
+      }
+    },
+    {
+      "id": "LAP003",
+      "brand": "Lenovo",
+      "model": "ThinkPad X1 Carbon Gen 9",
+      "processor": "Intel Core i5-1145G7",
+      "ram_gb": 16,
+      "storage": {
+        "type": "SSD",
+        "capacity_gb": 256
+      }
+    },
+    {
+      "id": "LAP004",
+      "brand": "Apple",
+      "model": "MacBook Pro 14\"",
+      "processor": "Apple M1 Pro",
+      "ram_gb": 16,
+      "storage": {
+        "type": "SSD",
+        "capacity_gb": 512
+      }
+    },
+    {
+      "id": "\u001b\u001b[3~",
+      "brand": "",
+      "model": "",
+      "processor": "",
+      "ram_gb": 0,
+      "storage": {
+        "type": "",
+        "capacity_gb": 0
+      }
+    }
+  ]
+}
