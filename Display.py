@@ -1,7 +1,7 @@
-import json
+import pickle
 def display_inventory():
-    with open('inventory.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    with open('inventory.pkl', 'rb') as f:
+        data = pickle.load(f)
     laptops = data.get('laptops', [])
     
     
