@@ -1,5 +1,5 @@
 import pickle
-def remove_laptop_by_id(laptop_id):
+def delete_Laptop(laptop_id):
     with open('inventory.pkl', 'rb') as f:
         data = pickle.load(f)
     laptops = data.get('laptops', [])
@@ -17,5 +17,5 @@ if __name__ == '__main__':
     print("==============================\n")
     laptop_id = input("Please enter the Laptop ID to remove: ")
     print("\nProcessing removal...\n")
-    remove_laptop_by_id(laptop_id)
+    delete_Laptop(laptop_id)
     print("\nOperation completed.\n")

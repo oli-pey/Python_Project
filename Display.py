@@ -1,4 +1,5 @@
 import pickle
+
 def display_inventory():
     with open('inventory.pkl', 'rb') as f:
         data = pickle.load(f)
@@ -6,7 +7,7 @@ def display_inventory():
     
     
     # Print header
-    print(f"{'ID':<8} {'Brand':<10} {'Model':<25} {'Processor':<25} {'RAM':<5} {'Storage':<12} {'OS':<8}")
+    print(f"{'ID':<8} {'Brand':<10} {'Model':<25} {'Processor':<25} {'RAM':<10} {'Storage':<12} {'OS':<8}")
     for laptop in laptops:
         id = laptop.get('id', '')
         brand = laptop.get('brand', '')
@@ -24,10 +25,8 @@ def display_inventory():
             f"{brand:<10} "
             f"{model:<25} "
             f"{processor:<25} "
-            f"{ram:<5} "
+            f"{ram:<10} "
             f"{storage:<12} "
             f"{os:<8}"
         )
 
-if __name__ == '__main__':
-    display_inventory()

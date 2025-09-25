@@ -1,7 +1,7 @@
 import pickle
 import os
 
-def add_laptop_to_pickle(laptop, pickle_path='inventory.pkl'):
+def create_laptop(laptop, pickle_path='inventory.pkl'):
     
 	# Lade bestehende Daten oder erstelle neue Struktur
     if os.path.exists(pickle_path):
@@ -25,4 +25,4 @@ if __name__ == '__main__':
         "ram_gb": 8,
         "storage-size_gb": 256
     }
-    add_laptop_to_pickle(new_laptop)
+    create_laptop(new_laptop)
