@@ -9,11 +9,11 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches your main.py in
 - If they choose __Filter Laptop__, they input criteria (e.g. “RAM > 16”) and the program shows matching laptops.
   All operations read from and write to a __pickle file__ that stores the list of laptop objects, so the inventory is persistent across runs.
 ## User Stories
-- As a user, I want to __see all stored laptops__. 
-- As a user, I want to __delete__ a laptop entry.
-- As a user, I want to __filter laptops__ by criteria (e.g. RAM, storage) to find ones meeting requirements.
-- As a user, I want all changes to persist (so when I next run the app, I don’t lose data).
-- As a user, I want input validation so I don’t crash the program by entering invalid values.
+- As a user, I want to __see all stored laptops__, because it allows me to quickly review my current inventory without searching through files or notes.
+- As a user, I want to __delete__ a laptop entry, because it helps me keep the inventory up to date when devices are sold, disposed of, or no longer needed.
+- As a user, I want to __filter laptops__ by criteria (e.g. RAM, storage) to find ones meeting requirements, because it saves time when searching for specific device configurations and avoids manual sorting.
+- As a user, I want all changes to persist (so when I next run the app, I don’t lose data), because it prevents data loss and ensures the inventory remains consistent between sessions.
+- As a user, I want input validation so I don’t crash the program by entering invalid values, because it makes the tool reliable and user-friendly even for non-technical users.
 ## Use Cases
 - Display Inventory (from inventory.pkl)
 - Delete Laptop (from inventory.pkl)
