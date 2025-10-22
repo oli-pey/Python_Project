@@ -14,16 +14,17 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the programm. T
   All operations read from and write to a __pickle file__ that stores the list of laptop objects, so the inventory is persistent across runs.
 ## User Stories
 - As a user, I want to __see all stored laptops__, because it allows me to quickly review my current inventory without searching through files or notes.
-- As a user, I want to __create__ new laptop entries, users should be able to enter the attributes for a new laptop in the console after a laptop has been added to the inventory the inventory should be displayed for the user to see the result.
+- As a user, I want to __create__ new laptop entries, so i can keep my inventory up do date with new purchases of laptops.
 - As a user, I want to __delete__ a laptop entry, because it helps me keep the inventory up to date when devices are sold, disposed of, or no longer needed.
 - As a user, I want to __filter laptops__ by criteria (e.g. RAM, storage) to find ones meeting requirements, because it saves time when searching for specific device configurations and avoids manual sorting.
 - As a user, I want all changes to persist (so when I next run the app, I don’t lose data), because it prevents data loss and ensures the inventory remains consistent between sessions.
 - As a user, I want input validation so I don’t crash the program by entering invalid values, because it makes the tool reliable and user-friendly even for non-technical users.
 ## Use Cases
 - Display Inventory (from inventory.pkl)
+- Create Laptop (from and to inventory.pkl)
 - Delete Laptop (from inventory.pkl)
-- Create Laptop (with imput validation and write to inventory.pkl)
-- Filter Inventory ( Display Items from inventory.pkl matching filter criteria)
+- Filter Inventory (Display Items from inventory.pkl matching filter criteria)
+- 
 ## Project Requirements
 ### 1. Interactive App (Console Input)
 - Menu requiring console input in main.py
