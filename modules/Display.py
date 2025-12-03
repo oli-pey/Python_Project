@@ -1,14 +1,13 @@
 import os
 import pickle
-
+PICKLE_PATH = 'data/test.pkl'
 
 def display_inventory():
-    pickle_path = 'data/test.pkl'
     laptops = []
 
-    if os.path.exists(pickle_path):
+    if os.path.exists(PICKLE_PATH):
         try:
-            with open(pickle_path, 'rb') as f:
+            with open(PICKLE_PATH, 'rb') as f:
                 data = pickle.load(f)
                 laptops = data.get('laptops', [])
         except Exception:
@@ -19,8 +18,6 @@ def display_inventory():
         print("No laptops found in inventory.")
         return
 
-# Sort by ID (safely get numeric id or 0)
-    laptops.sort(key=lambda x: x.get('id', 0))
 
     # Print header
     print(f"{'ID':<6} {'Brand':<12} {'Model':<25} {'Processor':<25} {'RAM':<10} {'Storage':<12} {'OS':<8}")
