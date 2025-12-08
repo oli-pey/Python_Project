@@ -1,7 +1,7 @@
 from modules.Display import display_inventory
 from modules.Create import create_laptop
 from modules.Delete import delete_laptop
-#from modules.Filter import filter_laptops
+from modules.Filter import filter_laptops
 import time
 
 
@@ -41,7 +41,7 @@ def main():
             delete_laptop()
         elif menuchoice == 4:
             print("Filter for specific devices")
-            #filter_laptops()
+            filter_laptops()
 
         input("\nPress Enter to return to the main menu...")
 
