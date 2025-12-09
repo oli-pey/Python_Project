@@ -1,6 +1,6 @@
 import os
 import pickle
-PICKLE_PATH = 'data/test.pkl'
+PICKLE_PATH = 'data/inventory.pkl'
 
 def display_inventory():
     laptops = []
@@ -9,11 +9,13 @@ def display_inventory():
         try:
             with open(PICKLE_PATH, 'rb') as f:
                 data = pickle.load(f)
-                laptops = data.get('laptops', [])
+                # Use .get() to avoid errors if the 'laptops' key is missing inside the file
+                laptops = data.get('laptops', []) 
         except Exception:
-            print("Error: Could not read inventory file.")
+            # Handle corrupted files or read errors safely
+            print("Warning: Could not read inventory file. Starting with empty inventory.")
             laptops = []
-
+        
     if not laptops:
         print("No laptops found in inventory.")
         return

@@ -12,7 +12,6 @@ ALLOWED_PROCESSORS = [
     "Apple M1", "Apple M2", "Apple M3"
 ]
 
-
 def create_laptop():
     """
     Handles interactive creation of a laptop entry and stores it in inventory.pkl.
@@ -22,16 +21,31 @@ def create_laptop():
     print("   ADD NEW LAPTOP TO INVENTORY")
     print("==============================\n")
 
-    pickle_path = "data/test.pkl"
+    pickle_path = "data/inventory.pkl"
 
     # -------------------------------
-    #   LOAD EXISTING INVENTORY
+    #   LOAD EXISTING INVENTORY (ROBUST)
     # -------------------------------
+    # 1. Initialize data with a default value so it always exists
+    data = {"laptops": []}
+
+    # 2. Try to load the file
     if os.path.exists(pickle_path):
-        with open(pickle_path, "rb") as f:
-            data = pickle.load(f)
-    else:
-        data = {"laptops": []}
+        try:
+            with open(pickle_path, 'rb') as f:
+                data = pickle.load(f)
+                    # Ensure 'laptops' key exists, even if the dict is empty
+                if "laptops" not in data:
+                    data["laptops"] = []
+                else:
+                    # If the file contains something else (like a list), reset it
+                    print("Warning: File format incorrect. Starting with empty inventory.")
+                    data = {"laptops": []}
+
+        except Exception:
+            # Handle corrupted files, empty files, or permission errors
+            print("Warning: Could not read inventory file. Starting with empty inventory.")
+            data = {"laptops": []}
 
     # Extract existing laptop IDs (used for uniqueness validation)
     existing_ids = [laptop.get("id") for laptop in data["laptops"]]
@@ -41,7 +55,6 @@ def create_laptop():
     # -------------------------------
 
     def laptop_id_input():
-        """Request a unique 4-digit numeric laptop ID."""
         while True:
             laptop_id = input("Enter laptop ID (4 digits): ").strip()
 
@@ -65,7 +78,6 @@ def create_laptop():
             return laptop_id
 
     def brand_input():
-        """Request a laptop brand from predefined allowed options."""
         while True:
             brand = input("Enter laptop manufacturer: ").strip()
 
@@ -80,7 +92,6 @@ def create_laptop():
             return brand
 
     def model_input():
-        """Request the laptop model (max 25 characters)."""
         while True:
             model = input("Enter laptop model: ").strip()
 
@@ -95,7 +106,6 @@ def create_laptop():
             return model
 
     def processor_input():
-        """Request a processor from allowed list."""
         print(f"Allowed Processors: {', '.join(ALLOWED_PROCESSORS)}")
         while True:
             processor = input("Enter processor: ").strip()
@@ -106,7 +116,6 @@ def create_laptop():
             print("Invalid processor. Select from the list above.")
 
     def ram_input():
-        """Request RAM size in multiples of 8GB (8–256)."""
         while True:
             ram_value = input("Enter RAM in GB: ").strip()
 
@@ -127,14 +136,14 @@ def create_laptop():
             return ram_gb
 
     def storage_input():
-        """Request storage size (256–2048GB, multiples of 256)."""
         while True:
             try:
                 storage_gb = int(input("Enter storage in GB: "))
 
                 if not (256 <= storage_gb <= 2048):
                     print("Storage must be between 256GB and 2048GB.")
-                elif storage_gb % 256 != 0:
+                    continue
+                if storage_gb % 256 != 0:
                     print("Storage must be a multiple of 256GB.")
                 else:
                     return storage_gb
@@ -143,7 +152,6 @@ def create_laptop():
                 print("Please enter a numeric value.")
 
     def os_input():
-        """Request operating system. Returns True for macOS, False for Windows."""
         while True:
             os_name = input("Enter OS (Windows/macOS): ").strip().lower()
 
@@ -172,9 +180,18 @@ def create_laptop():
     # -------------------------------
     data["laptops"].append(laptop)
 
-    with open(pickle_path, "wb") as f:
-        pickle.dump(data, f)
+    # We use a try/except here too, just in case of permission errors while saving
+    try:
+        with open(pickle_path, "wb") as f:
+            pickle.dump(data, f)
+        
+        print(f"\nLaptop '{laptop['brand']} {laptop['model']}' "
+              f"with ID '{laptop['id']}' added successfully!")
+        print("Operation completed.\n")
+        
+    except Exception as e:
+        print(f"Error: Could not save to file. {e}")
 
-    print(f"\nLaptop '{laptop['brand']} {laptop['model']}' "
-          f"with ID '{laptop['id']}' added successfully!")
-    print("Operation completed.\n")
+# Run the function
+if __name__ == "__main__":
+    create_laptop()

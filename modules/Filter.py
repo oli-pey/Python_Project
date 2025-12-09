@@ -2,7 +2,7 @@ import os
 import pickle
 from modules.Create import ALLOWED_BRANDS
 
-PICKLE_PATH = 'data/test.pkl'
+PICKLE_PATH = 'data/inventory.pkl'
 
 
 def load_inventory():

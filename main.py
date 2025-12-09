@@ -22,12 +22,12 @@ def main():
             if menuchoice < 1 or menuchoice > 4:
                 print("Invalid choice. Please enter a number between 1 and 4.")
                 time.sleep(2)
-                continue  # restart the loop
+                continue
 
         except ValueError:
             print("Invalid input. Please enter a number.")
             time.sleep(2)
-            continue  # restart the loop
+            continue 
 
         # --- Valid choices ---
         if menuchoice == 1:

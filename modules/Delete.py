@@ -1,39 +1,44 @@
 import pickle
 import os
-import traceback
 import modules.Display as Display
 
-
 def delete_laptop():
-    """
-    Deletes a laptop from the inventory using its unique ID.
-    """
-
     print("\n==============================")
     print("   CURRENT LAPTOP INVENTORY")
     print("==============================\n")
+    
     Display.display_inventory()
 
     print("\n==============================")
     print("   REMOVE LAPTOP FROM INVENTORY")
     print("==============================\n")
 
-    # Ensure inventory file exists
-    pickle_path = "data/test.pkl"
-    if not os.path.exists(pickle_path):
-        print("No inventory file found. Nothing to delete.")
-        return
+    pickle_path = "data/inventory.pkl"
 
-    # Load data safely (report the exception for debugging)
-    try:
-        with open(pickle_path, "rb") as f:
-            data = pickle.load(f)
-    except Exception as e:
-        print(f"Error reading inventory file: {e}")
-        traceback.print_exc()
-        return
+    # ---------------------------------------------------------
+    #  UPDATED LOADING LOGIC
+    # ---------------------------------------------------------
+    # Initialize defaults so 'data' exists even if loading fails
+    data = {"laptops": []}
+    laptops = []
 
-    laptops = data.get("laptops", [])
+    if os.path.exists(pickle_path):
+        try:
+            with open(pickle_path, 'rb') as f:
+                data = pickle.load(f)
+                # Use .get() to avoid errors if the 'laptops' key is missing inside the file
+                laptops = data.get('laptops', []) 
+        except Exception:
+            # Handle corrupted files or read errors safely
+            print("Warning: Could not read inventory file. Starting with empty inventory.")
+            data = {"laptops": []}
+            laptops = []
+    # ---------------------------------------------------------
+
+    # Check if we actually have laptops to delete to avoid an infinite loop below
+    if not laptops:
+        print("Inventory is empty or file not found. Nothing to delete.")
+        return
 
     # Build list of IDs in inventory
     existing_ids = [laptop.get("id") for laptop in laptops]
@@ -60,8 +65,10 @@ def delete_laptop():
     ]
 
     # Save updated inventory
-    with open(pickle_path, "wb") as f:
-        pickle.dump(data, f)
-
-    print(f"\nLaptop with ID '{laptop_id}' has been successfully removed.")
-    print("Operation completed.\n")
+    try:
+        with open(pickle_path, "wb") as f:
+            pickle.dump(data, f)
+        print(f"\nLaptop with ID '{laptop_id}' has been successfully removed.")
+        print("Operation completed.\n")
+    except Exception as e:
+        print(f"Error saving changes: {e}")
