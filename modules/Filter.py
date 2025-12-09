@@ -1,6 +1,6 @@
 import os
 import pickle
-from modules.Create import ALLOWED_BRANDS # Import allowed brands for validation
+from modules.Create import ALLOWED_BRANDS
 
 PICKLE_PATH = 'data/test.pkl'
 
@@ -29,13 +29,13 @@ def print_results(laptops):
     print(f"{'ID':<6} {'Brand':<12} {'Model':<25} {'RAM':<8} {'Storage':<10} {'OS':<8}")
     print('-' * 70)
     for l in laptops:
-        lid = l.get('id', '')
+        laptop_id = l.get('id', '')
         brand = l.get('brand', '')
         model = l.get('model', '')
         ram = f"{l.get('ram_gb', '')} GB" if l.get('ram_gb') is not None else ''
         storage = f"{l.get('storage_gb', '')} GB" if l.get('storage_gb') is not None else ''
         os_name = 'MacOS' if l.get('is_macos', False) else 'Windows'
-        print(f"{str(lid):<6} {brand:<12} {model:<25} {ram:<8} {storage:<10} {os_name:<8}")
+        print(f"{str(laptop_id):<6} {brand:<12} {model:<25} {ram:<8} {storage:<10} {os_name:<8}")
 
 
 def filter_laptops():
