@@ -54,12 +54,12 @@ def filter_laptops():
     print(" 2) Minimum Storage (GB)")
     print(" 3) Brand")
     print(" 4) Min RAM AND Min Storage (GB)")
-    menuchoice = input("Your choice: ").strip().lower()
+    menuchoice = int(input("Your choice: "))
 
     results = []
 
     # 1. Filter by Minimum RAM (example minimum 32 GB input works here)
-    if menuchoice == "1":
+    if menuchoice == 1:
         try:
             min_ram = int(input("Min RAM (GB): ").strip())
             results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
@@ -68,7 +68,7 @@ def filter_laptops():
             return
 
     # 2. Filter by Minimum Storage
-    elif menuchoice == "2":
+    elif menuchoice == 2:
         try:
             min_storage = int(input("Min Storage (GB): ").strip())
             results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
@@ -78,7 +78,7 @@ def filter_laptops():
 
 
     # 4. Filter by Brand
-    elif menuchoice == "3":
+    elif menuchoice == 3:
         print(f"Allowed Brands: {", ".join(ALLOWED_BRANDS)}")
         brand_choice = input("Brand: ").strip()
         if brand_choice not in ALLOWED_BRANDS:
@@ -87,7 +87,7 @@ def filter_laptops():
         results = [l for l in laptops if l.get("brand", "").lower() == brand_choice.lower()]
 
     # 5. Filter by Min RAM AND Min Storage
-    elif menuchoice == "4":
+    elif menuchoice == 4:
         try:
             min_ram = int(input("Min RAM (GB): ").strip())
             min_storage = int(input("Min Storage (GB): ").strip())
