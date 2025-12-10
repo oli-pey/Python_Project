@@ -1,16 +1,16 @@
 import os
 import pickle
-PICKLE_PATH = 'data/inventory.pkl'
+PICKLE_PATH = "data/inventory.pkl"
 
 def display_inventory():
     laptops = []
 
     if os.path.exists(PICKLE_PATH):
         try:
-            with open(PICKLE_PATH, 'rb') as f:
+            with open(PICKLE_PATH, "rb") as f:
                 data = pickle.load(f)
-                # Use .get() to avoid errors if the 'laptops' key is missing inside the file
-                laptops = data.get('laptops', []) 
+                # Use .get() to avoid errors if the "laptops" key is missing inside the file
+                laptops = data.get("laptops", []) 
         except Exception:
             # Handle corrupted files or read errors safely
             print("Warning: Could not read inventory file. Starting with empty inventory.")
@@ -22,20 +22,17 @@ def display_inventory():
 
 
     # Print header
-    print(f"{'ID':<6} {'Brand':<12} {'Model':<25} {'Processor':<25} {'RAM':<10} {'Storage':<12} {'OS':<8}")
+    print(f"{"ID":<6} {"Brand":<12} {"Model":<25} {"Processor":<25} {"RAM":<10} {"Storage":<12} {"OS":<8}")
     print("-" * 100)
 
-    # Print each laptop's details
+    # Print each laptop"s details
     for laptop in laptops:
-        laptop_id = laptop.get('id', '')
-        brand = laptop.get('brand', '')
-        model = laptop.get('model', '')
-        processor = laptop.get('processor', '')
-        ram = laptop.get('ram_gb')
-        storage = laptop.get('storage_gb')
-        os_name = 'MacOS' if laptop.get('is_macos', False) else 'Windows'
+        laptop_id = laptop.get("id", "")
+        brand = laptop.get("brand", "")
+        model = laptop.get("model", "")
+        processor = laptop.get("processor", "")
+        ram = str(laptop.get("ram_gb", "")) + " GB"
+        storage = str(laptop.get("storage_gb", "")) + " GB"
+        os_name = "MacOS" if laptop.get("is_macos", False) else "Windows"
 
-        ram_str = f"{ram} GB" if ram is not None and ram != '' else ''
-        storage_str = f"{storage} GB" if storage is not None and storage != '' else ''
-
-        print(f"{str(laptop_id):<6} {brand:<12} {model:<25} {processor:<25} {ram_str:<10} {storage_str:<12} {os_name:<8}")
+        print(f"{str(laptop_id):<6} {brand:<12} {model:<25} {processor:<25} {ram:<10} {storage:<12} {os_name:<8}")

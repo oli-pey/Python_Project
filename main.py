@@ -4,8 +4,6 @@ from modules.Delete import delete_laptop
 from modules.Filter import filter_laptops
 import time
 
-
-
 def main():
     while True:
         print("Welcome to the Laptop Inventory Program")
@@ -45,5 +43,5 @@ def main():
 
         input("\nPress Enter to return to the main menu...")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
