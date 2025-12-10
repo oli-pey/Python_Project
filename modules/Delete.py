@@ -14,61 +14,55 @@ def delete_laptop():
     print("==============================\n")
 
     pickle_path = "data/inventory.pkl"
-
-    # ---------------------------------------------------------
-    #  UPDATED LOADING LOGIC
-    # ---------------------------------------------------------
-    # Initialize defaults so 'data' exists even if loading fails
-    data = {"laptops": []}
+    
+    # --- FIX 1: Initialize 'data' early to prevent scope errors ---
+    data = {"laptops": []} 
     laptops = []
 
     if os.path.exists(pickle_path):
         try:
             with open(pickle_path, 'rb') as f:
                 data = pickle.load(f)
-                # Use .get() to avoid errors if the 'laptops' key is missing inside the file
                 laptops = data.get('laptops', []) 
-        except Exception:
-            # Handle corrupted files or read errors safely
-            print("Warning: Could not read inventory file. Starting with empty inventory.")
-            data = {"laptops": []}
-            laptops = []
-    # ---------------------------------------------------------
+        except Exception as e:
+            print(f"Warning: Could not read inventory file ({e}). Starting with empty inventory.")
+            # data is already initialized to empty above, so we are safe
 
-    # Check if we actually have laptops to delete to avoid an infinite loop below
     if not laptops:
         print("Inventory is empty or file not found. Nothing to delete.")
         return
 
-    # Build list of IDs in inventory
-    existing_ids = [laptop.get("id") for laptop in laptops]
+    # --- FIX 2: Normalize IDs to Strings for comparison ---
+    # We convert existing IDs to strings to ensure we can match input regardless of stored type
+    existing_ids = [str(laptop.get("id")) for laptop in laptops]
 
-    # Request a valid numeric ID
     while True:
         user_input = input("Please enter the Laptop ID to remove: ").strip()
 
-        if not user_input.isdigit():
-            print("Laptop ID must be numeric.")
+        # Check if ID exists (comparing strings)
+        if user_input not in existing_ids:
+            print(f"No laptop found with ID '{user_input}'. Please try again.")
             continue
 
-        laptop_id = int(user_input)
+        laptop_id_to_remove = user_input
+        break 
 
-        if laptop_id not in existing_ids:
-            print(f"No laptop found with ID '{laptop_id}'. Please try again.")
-            continue
-
-        break  # valid ID found
-
-    # Remove the selected laptop
-    data["laptops"] = [
-        laptop for laptop in laptops if laptop.get("id") != laptop_id
+    # --- FIX 3: Robust Deletion Logic ---
+    # Convert both the stored ID and target ID to strings during comparison
+    # This ensures 1 matches "1"
+    new_laptop_list = [
+        laptop for laptop in laptops 
+        if str(laptop.get("id")) != str(laptop_id_to_remove)
     ]
+    
+    # Update data dictionary
+    data["laptops"] = new_laptop_list
 
     # Save updated inventory
     try:
         with open(pickle_path, "wb") as f:
             pickle.dump(data, f)
-        print(f"\nLaptop with ID '{laptop_id}' has been successfully removed.")
+        print(f"\nLaptop with ID '{laptop_id_to_remove}' has been successfully removed.")
         print("Operation completed.\n")
     except Exception as e:
         print(f"Error saving changes: {e}")
