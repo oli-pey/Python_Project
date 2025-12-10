@@ -2,7 +2,7 @@ import pickle
 import os
 
 # CONSTANTS
-pickle_path = "data/inventory.pkl"
+PICKLE_PATH = "data/inventory.pkl"
 
 ALLOWED_BRANDS = ["Dell", "HP", "Lenovo", "Asus", "Acer", "Apple"]
 ALLOWED_PROCESSORS = [
@@ -21,9 +21,9 @@ def create_laptop():
     # -------------------------------
     laptops = []
 
-    if os.path.exists(pickle_path):
+    if os.path.exists(PICKLE_PATH):
         try:
-            with open(pickle_path, "rb") as f:
+            with open(PICKLE_PATH, "rb") as f:
                 data = pickle.load(f)
                 laptops = data.get("laptops", []) 
         except Exception:
@@ -171,9 +171,9 @@ def create_laptop():
 
     try:
         # Ensure directory exists before saving
-        os.makedirs(os.path.dirname(pickle_path), exist_ok=True)
+        os.makedirs(os.path.dirname(PICKLE_PATH), exist_ok=True)
         
-        with open(pickle_path, "wb") as f:
+        with open(PICKLE_PATH, "wb") as f:
             pickle.dump(data_to_save, f)
         
         # Fixed syntax: used single quotes inside f-string keys
