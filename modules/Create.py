@@ -1,11 +1,10 @@
 import pickle
 import os
 
-# -------------------------------
-#   CONSTANTS
-# -------------------------------
-ALLOWED_BRANDS = ["Dell", "HP", "Lenovo", "Asus", "Acer", "Apple"]
+# CONSTANTS
+pickle_path = "data/inventory.pkl"
 
+ALLOWED_BRANDS = ["Dell", "HP", "Lenovo", "Asus", "Acer", "Apple"]
 ALLOWED_PROCESSORS = [
     "Intel Core i3", "Intel Core i5", "Intel Core i7", "Intel Core i9",
     "AMD Ryzen 3", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9",
@@ -13,42 +12,25 @@ ALLOWED_PROCESSORS = [
 ]
 
 def create_laptop():
-    """
-    Handles interactive creation of a laptop entry and stores it in inventory.pkl.
-    """
-
     print("\n==============================")
     print("   ADD NEW LAPTOP TO INVENTORY")
     print("==============================\n")
 
-    pickle_path = "data/inventory.pkl"
-
     # -------------------------------
-    #   LOAD EXISTING INVENTORY (ROBUST)
+    #   LOAD EXISTING INVENTORY (YOUR REQUESTED LOGIC)
     # -------------------------------
-    # 1. Initialize data with a default value so it always exists
-    data = {"laptops": []}
+    laptops = []
 
-    # 2. Try to load the file
     if os.path.exists(pickle_path):
         try:
-            with open(pickle_path, 'rb') as f:
+            with open(pickle_path, "rb") as f:
                 data = pickle.load(f)
-                    # Ensure 'laptops' key exists, even if the dict is empty
-                if "laptops" not in data:
-                    data["laptops"] = []
-                else:
-                    # If the file contains something else (like a list), reset it
-                    print("Warning: File format incorrect. Starting with empty inventory.")
-                    data = {"laptops": []}
-
+                laptops = data.get("laptops", []) 
         except Exception:
-            # Handle corrupted files, empty files, or permission errors
             print("Warning: Could not read inventory file. Starting with empty inventory.")
-            data = {"laptops": []}
+            laptops = []
 
-    # Extract existing laptop IDs (used for uniqueness validation)
-    existing_ids = [laptop.get("id") for laptop in data["laptops"]]
+    existing_ids = [laptop.get("id") for laptop in laptops]
 
     # -------------------------------
     #   INPUT VALIDATION FUNCTIONS
@@ -72,7 +54,7 @@ def create_laptop():
 
             laptop_id = int(laptop_id)
             if laptop_id in existing_ids:
-                print(f"Laptop ID '{laptop_id}' already exists. Choose another.")
+                print(f"Laptop ID {laptop_id} already exists. Choose another.")
                 continue
 
             return laptop_id
@@ -86,6 +68,7 @@ def create_laptop():
                 continue
 
             if brand not in ALLOWED_BRANDS:
+                # Fixed syntax: used single quotes inside the join to avoid conflict
                 print(f"Invalid brand. Allowed brands: {', '.join(ALLOWED_BRANDS)}")
                 continue
 
@@ -106,6 +89,7 @@ def create_laptop():
             return model
 
     def processor_input():
+        # Fixed syntax: used single quotes inside the join
         print(f"Allowed Processors: {', '.join(ALLOWED_PROCESSORS)}")
         while True:
             processor = input("Enter processor: ").strip()
@@ -160,7 +144,7 @@ def create_laptop():
             if os_name == "windows":
                 return False
 
-            print("Invalid input. Enter 'Windows' or 'macOS'.")
+            print("Invalid input. Enter Windows or macOS.")
 
     # -------------------------------
     #   CAPTURE LAPTOP DETAILS
@@ -178,15 +162,23 @@ def create_laptop():
     # -------------------------------
     #   SAVE TO INVENTORY
     # -------------------------------
-    data["laptops"].append(laptop)
+    
+    # Append the new laptop to the list we loaded earlier
+    laptops.append(laptop)
+    
+    # Re-wrap it in a dictionary structure for saving
+    data_to_save = {"laptops": laptops}
 
-    # We use a try/except here too, just in case of permission errors while saving
     try:
-        with open(pickle_path, "wb") as f:
-            pickle.dump(data, f)
+        # Ensure directory exists before saving
+        os.makedirs(os.path.dirname(pickle_path), exist_ok=True)
         
-        print(f"\nLaptop '{laptop['brand']} {laptop['model']}' "
-              f"with ID '{laptop['id']}' added successfully!")
+        with open(pickle_path, "wb") as f:
+            pickle.dump(data_to_save, f)
+        
+        # Fixed syntax: used single quotes inside f-string keys
+        print(f"\nLaptop {laptop['brand']} {laptop['model']} "
+              f"with ID {laptop['id']} added successfully!")
         print("Operation completed.\n")
         
     except Exception as e:

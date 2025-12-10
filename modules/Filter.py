@@ -2,17 +2,16 @@ import os
 import pickle
 from modules.Create import ALLOWED_BRANDS
 
-PICKLE_PATH = 'data/inventory.pkl'
+PICKLE_PATH = "data/inventory.pkl"
 
 
 def load_inventory():
     laptops = []
-
     if os.path.exists(PICKLE_PATH):
         try:
-            with open(PICKLE_PATH, 'rb') as f:
+            with open(PICKLE_PATH, "rb") as f:
                 data = pickle.load(f)
-                laptops = data.get('laptops', [])
+                laptops = data.get("laptops", [])
         except Exception:
             print("Error: Could not read inventory file.")
             laptops = []
@@ -22,91 +21,86 @@ def load_inventory():
 
 def print_results(laptops):
     if not laptops:
-        print('No laptops match the filter criteria.')
+        print("No laptops match the filter criteria.")
         return
 
     print(f"Found {len(laptops)} matching laptop(s):")
-    print(f"{'ID':<6} {'Brand':<12} {'Model':<25} {'RAM':<8} {'Storage':<10} {'OS':<8}")
-    print('-' * 70)
+    print(f"{"ID":<6} {"Brand":<12} {"Model":<25} {"RAM":<8} {"Storage":<10} {"OS":<8}")
+    print("-" * 70)
     for l in laptops:
-        laptop_id = l.get('id', '')
-        brand = l.get('brand', '')
-        model = l.get('model', '')
-        ram = f"{l.get('ram_gb', '')} GB" if l.get('ram_gb') is not None else ''
-        storage = f"{l.get('storage_gb', '')} GB" if l.get('storage_gb') is not None else ''
-        os_name = 'MacOS' if l.get('is_macos', False) else 'Windows'
+        laptop_id = l.get("id", "")
+        brand = l.get("brand", "")
+        model = l.get("model", "")
+        ram = f"{l.get("ram_gb", "")} GB" if l.get("ram_gb") is not None else ""
+        storage = f"{l.get("storage_gb", "")} GB" if l.get("storage_gb") is not None else ""
+        os_name = "MacOS" if l.get("is_macos", False) else "Windows"
         print(f"{str(laptop_id):<6} {brand:<12} {model:<25} {ram:<8} {storage:<10} {os_name:<8}")
 
 
 def filter_laptops():
-    """
-    Allows the user to select a single filter criterion and displays the matching laptops.
-    """
-    print('\n==============================')
-    print('   FILTER LAPTOP INVENTORY')
-    print('==============================\n')
+    
+    print("\n==============================")
+    print("   FILTER LAPTOP INVENTORY")
+    print("==============================\n")
 
     laptops = load_inventory()
     if not laptops:
-        print('No laptops found in inventory.')
+        print("No laptops found in inventory.")
         return
 
     # Print menu and get choice
-    print('\nFilter by:')
-    print(' 1) Minimum RAM (GB)')
-    print(' 2) Minimum Storage (GB)')
-    print(' 3) Brand')
-    print(' 4) Min RAM AND Min Storage (GB)')
-    choice = input('Your choice: ').strip().lower()
-
-    if choice in ('q', 'quit', 'exit'):
-        return
+    print("\nFilter by:")
+    print(" 1) Minimum RAM (GB)")
+    print(" 2) Minimum Storage (GB)")
+    print(" 3) Brand")
+    print(" 4) Min RAM AND Min Storage (GB)")
+    menuchoice = input("Your choice: ").strip().lower()
 
     results = []
 
     # 1. Filter by Minimum RAM (example minimum 32 GB input works here)
-    if choice == '1':
+    if menuchoice == "1":
         try:
-            min_ram = int(input('Min RAM (GB): ').strip())
-            results = [l for l in laptops if int(l.get('ram_gb', 0)) >= min_ram]
+            min_ram = int(input("Min RAM (GB): ").strip())
+            results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
         except ValueError:
-            print('Invalid input. Please enter a numeric RAM value.')
+            print("Invalid input. Please enter a numeric RAM value.")
             return
 
     # 2. Filter by Minimum Storage
-    elif choice == '2':
+    elif menuchoice == "2":
         try:
-            min_storage = int(input('Min Storage (GB): ').strip())
-            results = [l for l in laptops if int(l.get('storage_gb', 0)) >= min_storage]
+            min_storage = int(input("Min Storage (GB): ").strip())
+            results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
         except ValueError:
-            print('Invalid input. Please enter a numeric storage value.')
+            print("Invalid input. Please enter a numeric storage value.")
             return
 
 
     # 4. Filter by Brand
-    elif choice == '3':
-        print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
-        brand_choice = input('Brand: ').strip()
+    elif menuchoice == "3":
+        print(f"Allowed Brands: {", ".join(ALLOWED_BRANDS)}")
+        brand_choice = input("Brand: ").strip()
         if brand_choice not in ALLOWED_BRANDS:
-            print(f"Invalid brand. Please select from: {', '.join(ALLOWED_BRANDS)}")
+            print(f"Invalid brand. Please select from: {", ".join(ALLOWED_BRANDS)}")
             return
-        results = [l for l in laptops if l.get('brand', '').lower() == brand_choice.lower()]
+        results = [l for l in laptops if l.get("brand", "").lower() == brand_choice.lower()]
 
     # 5. Filter by Min RAM AND Min Storage
-    elif choice == '4':
+    elif menuchoice == "4":
         try:
-            min_ram = int(input('Min RAM (GB): ').strip())
-            min_storage = int(input('Min Storage (GB): ').strip())
+            min_ram = int(input("Min RAM (GB): ").strip())
+            min_storage = int(input("Min Storage (GB): ").strip())
             results = [
                 l for l in laptops 
-                if int(l.get('ram_gb', 0)) >= min_ram and int(l.get('storage_gb', 0)) >= min_storage
+                if int(l.get("ram_gb", 0)) >= min_ram and int(l.get("storage_gb", 0)) >= min_storage
             ]
         except ValueError:
-            print('Invalid input. Please enter numeric values for both RAM and Storage.')
+            print("Invalid input. Please enter numeric values for both RAM and Storage.")
             return
 
     else:
-        print('Invalid choice.')
+        print("Invalid choice.")
         return
 
     print_results(results)
