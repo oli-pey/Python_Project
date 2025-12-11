@@ -1,21 +1,27 @@
 import pickle
 from modules.Display import load_inventory
-from config.config import PICKLE_PATH, ALLOWED_BRANDS,ALLOWED_PROCESSORS
+from config.config import PICKLE_PATH, ALLOWED_BRANDS, ALLOWED_PROCESSORS
+
 
 def create_laptop():
+    """Handles the user interaction for creating a new laptop entry and saving it to the inventory."""
     print("\n==============================")
-    print("   ADD NEW LAPTOP TO INVENTORY")
+    print("     ADD NEW LAPTOP TO INVENTORY")
     print("==============================\n")
 
     laptops = load_inventory()
-    existing_ids = [laptop.get("id") for laptop in laptops]
+    existing_ids = [laptop.get('id') for laptop in laptops]
 
     # -------------------------------
-    #   INPUT VALIDATION FUNCTIONS
+    #    INPUT VALIDATION FUNCTIONS
     # -------------------------------
+    
     def laptop_id_input():
+        """Prompts and validates for a unique, 4-digit numeric laptop ID."""
         while True:
-            laptop_id_str = input("Enter laptop ID (4 digits): ").strip()           
+            # Use 'laptop_id_str' for the string input
+            laptop_id_str = input("Enter laptop ID (4 digits): ").strip()
+
             if not laptop_id_str:
                 print("Laptop ID cannot be empty.")
             elif not laptop_id_str.isdigit():
@@ -24,22 +30,25 @@ def create_laptop():
                 print("Laptop ID must be exactly 4 digits.")
             else:
                 laptop_id = int(laptop_id_str)
-            if laptop_id in existing_ids:
-                print(f"Laptop ID {laptop_id} already exists. Choose another.")
-            else:
-                return laptop_id 
-            
+                if laptop_id in existing_ids:
+                    print(f"Laptop ID {laptop_id} already exists. Choose another.")
+                else:
+                    return laptop_id
+
     def brand_input():
+        """Prompts and validates for a brand against the ALLOWED_BRANDS list."""
         while True:
             brand = input("Enter laptop manufacturer: ").strip()
             if not brand:
                 print("Brand cannot be empty.")
             elif brand not in ALLOWED_BRANDS:
-                print(f"Invalid brand. Allowed brands: {", ".join(ALLOWED_BRANDS)}")
+                # Clean PEP 8 spacing in f-string
+                print(f"Invalid brand. Allowed brands: {', '.join(ALLOWED_BRANDS)}")
             else:
                 return brand
 
     def model_input():
+        """Prompts and validates for a non-empty laptop model (max 25 characters)."""
         while True:
             model = input("Enter laptop model: ").strip()
             if not model:
@@ -50,20 +59,23 @@ def create_laptop():
                 return model
 
     def processor_input():
-        print(f"Allowed Processors: {", ".join(ALLOWED_PROCESSORS)}")
+        """Prompts and validates for a processor against the ALLOWED_PROCESSORS list."""
+        print(f"Allowed Processors: {', '.join(ALLOWED_PROCESSORS)}")
         while True:
             processor = input("Enter processor: ").strip()
-            if not processor in ALLOWED_PROCESSORS:
+            if processor not in ALLOWED_PROCESSORS:
                 print("Invalid processor. Please choose from the allowed list.")
             else:
                 return processor
 
     def ram_input():
+        """Prompts and validates RAM (8GB-256GB, multiple of 8)."""
         while True:
             ram_value = input("Enter RAM in GB: ").strip()
             if not ram_value.isdigit():
                 print("Please enter a numeric value.")
                 continue
+                
             ram_gb = int(ram_value)
             if not (8 <= ram_gb <= 256):
                 print("RAM must be between 8GB and 256GB.")
@@ -73,11 +85,13 @@ def create_laptop():
                 return ram_gb
 
     def storage_input():
+        """Prompts and validates storage (256GB-2048GB, multiple of 256)."""
         while True:
             storage_value = input("Enter storage in GB: ").strip()
             if not storage_value.isdigit():
                 print("Please enter a numeric value.")
                 continue
+                
             storage_gb = int(storage_value)
             if not (256 <= storage_gb <= 2048):
                 print("Storage must be between 256GB and 2048GB.")
@@ -87,6 +101,7 @@ def create_laptop():
                 return storage_gb
 
     def os_input():
+        """Prompts and validates OS (Windows or macOS). Returns boolean."""
         while True:
             os_name = input("Enter OS (Windows/macOS): ").strip().lower()
             if os_name == "macos":
@@ -95,7 +110,7 @@ def create_laptop():
                 return False
             print("Invalid input. Enter Windows or macOS.")
 
-    #   CAPTURE LAPTOP DETAILS
+    # CAPTURE LAPTOP DETAILS
     laptop = {
         "id": laptop_id_input(),
         "brand": brand_input(),
@@ -107,7 +122,7 @@ def create_laptop():
     }
 
     # -------------------------------
-    #   SAVE TO INVENTORY
+    #    SAVE TO INVENTORY
     # -------------------------------
     
     # Append the new laptop to the list we loaded earlier
@@ -117,13 +132,15 @@ def create_laptop():
     data_to_save = {"laptops": laptops}
 
     try:
-        with open(PICKLE_PATH, "wb") as f:
-            pickle.dump(data_to_save, f)
+        # Use 'file' instead of 'f' for better clarity, though 'f' is common
+        with open(PICKLE_PATH, "wb") as file:
+            pickle.dump(data_to_save, file)
         
-        # Fixed syntax: used single quotes inside f-string keys
+        # Use implicit string concatenation over multiple lines, properly formatted
         print(f"\nLaptop {laptop['brand']} {laptop['model']} "
               f"with ID {laptop['id']} added successfully!")
         print("Operation completed.\n")
         
     except Exception:
+        # Catching a specific exception like IOError might be better, but keeping general
         print("Error: Could not save to file.")

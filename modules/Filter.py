@@ -1,8 +1,9 @@
 from config.config import ALLOWED_BRANDS
-from modules.Display import load_inventory, print_laptop_list # <-- Imported consolidated function
+from modules.Display import load_inventory, print_laptop_list
 
 
 def print_results(laptops):
+    """Prints the list of laptops that match the filter criteria."""
     if not laptops:
         print("No laptops match the filter criteria.")
         return
@@ -11,9 +12,10 @@ def print_results(laptops):
 
 
 def filter_laptops():
+    """Provides a menu for filtering the laptop inventory by various criteria."""
     
     print("\n==============================")
-    print("   FILTER LAPTOP INVENTORY")
+    print("     FILTER LAPTOP INVENTORY")
     print("==============================\n")
 
     laptops = load_inventory()
@@ -23,16 +25,24 @@ def filter_laptops():
 
     # Print menu and get choice
     print("\nFilter by:")
-    print(" 1) Minimum RAM (GB)")
-    print(" 2) Minimum Storage (GB)")
-    print(" 3) Brand")
-    print(" 4) Min RAM AND Min Storage (GB)")
-    menuchoice = int(input("Your choice: "))
+    menu = (
+        " 1) Minimum RAM (GB)\n"
+        " 2) Minimum Storage (GB)\n"
+        " 3) Brand\n"  # Corrected menu option order
+        " 4) Min RAM AND Min Storage (GB)"
+    )
+    
+    try:
+        # Use snake_case for the variable
+        menu_choice = int(input(f"{menu}\nYour choice: "))
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+        return
 
     results = []
 
-    # 1. Filter by Minimum RAM (example minimum 32 GB input works here)
-    if menuchoice == 1:
+    # 1. Filter by Minimum RAM
+    if menu_choice == 1:
         try:
             min_ram = int(input("Min RAM (GB): ").strip())
             results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
@@ -41,7 +51,7 @@ def filter_laptops():
             return
 
     # 2. Filter by Minimum Storage
-    elif menuchoice == 2:
+    elif menu_choice == 2:
         try:
             min_storage = int(input("Min Storage (GB): ").strip())
             results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
@@ -49,24 +59,29 @@ def filter_laptops():
             print("Invalid input. Please enter a numeric storage value.")
             return
 
-
-    # 4. Filter by Brand
-    elif menuchoice == 3:
-        print(f"Allowed Brands: {", ".join(ALLOWED_BRANDS)}")
+    # 3. Filter by Brand (Corrected choice number from 4 to 3)
+    elif menu_choice == 3:
+        # PEP 8 spacing around the join method
+        print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
         brand_choice = input("Brand: ").strip()
-        if brand_choice not in ALLOWED_BRANDS:
-            print(f"Invalid brand. Please select from: {", ".join(ALLOWED_BRANDS)}")
+        
+        if brand_choice.upper() not in [b.upper() for b in ALLOWED_BRANDS]:
+            print(f"Invalid brand. Please select from: {', '.join(ALLOWED_BRANDS)}")
             return
+            
         results = [l for l in laptops if l.get("brand", "").lower() == brand_choice.lower()]
 
-    # 5. Filter by Min RAM AND Min Storage
-    elif menuchoice == 4:
+    # 4. Filter by Min RAM AND Min Storage (Corrected choice number from 5 to 4)
+    elif menu_choice == 4:
         try:
             min_ram = int(input("Min RAM (GB): ").strip())
             min_storage = int(input("Min Storage (GB): ").strip())
+            
+            # Improved readability for the list comprehension over multiple lines
             results = [
                 l for l in laptops 
-                if int(l.get("ram_gb", 0)) >= min_ram and int(l.get("storage_gb", 0)) >= min_storage
+                if int(l.get("ram_gb", 0)) >= min_ram 
+                and int(l.get("storage_gb", 0)) >= min_storage
             ]
         except ValueError:
             print("Invalid input. Please enter numeric values for both RAM and Storage.")

@@ -1,40 +1,33 @@
 import pickle
-import os
-from modules.Display import display_inventory
+from modules.Display import display_inventory, load_inventory 
 from config.config import PICKLE_PATH
 
+
 def delete_laptop():
+    """Handles the user interaction for deleting a laptop entry from the inventory."""
     print("\n==============================")
-    print("   CURRENT LAPTOP INVENTORY")
+    print("     CURRENT LAPTOP INVENTORY")
     print("==============================\n")
     
+    # Display current inventory for user reference
     display_inventory()
 
     print("\n==============================")
-    print("   REMOVE LAPTOP FROM INVENTORY")
+    print("     REMOVE LAPTOP FROM INVENTORY")
     print("==============================\n")
     
-    # --- FIX 1: Initialize 'data' early to prevent scope errors ---
-    data = {"laptops": []} 
-    laptops = []
-
-    if os.path.exists(PICKLE_PATH):
-        try:
-            with open(PICKLE_PATH, 'rb') as f:
-                data = pickle.load(f)
-                laptops = data.get('laptops', []) 
-        except Exception:
-            print("Warning: Could not read inventory file")
-            exit()
+    # Use load_inventory to handle reading data and error checks
+    laptops = load_inventory()
 
     if not laptops:
-        print("Inventory is empty or file not found. Nothing to delete.")
+        print("Inventory is empty. Nothing to delete.")
         return
 
-    # --- FIX 2: Normalize IDs to Strings for comparison ---
-    # We convert existing IDs to strings to ensure we can match input regardless of stored type
+    # Normalize IDs to Strings for comparison (ensuring consistency with user input)
+    # Using 'str()' handles cases where IDs might be stored as int or str
     existing_ids = [str(laptop.get("id")) for laptop in laptops]
 
+    laptop_id_to_remove = None
     while True:
         user_input = input("Please enter the Laptop ID to remove: ").strip()
 
@@ -46,22 +39,24 @@ def delete_laptop():
         laptop_id_to_remove = user_input
         break 
 
-    # --- FIX 3: Robust Deletion Logic ---
-    # Convert both the stored ID and target ID to strings during comparison
-    # This ensures 1 matches "1"
+    # Robust Deletion Logic: Creates a new list excluding the item with the matching ID
     new_laptop_list = [
         laptop for laptop in laptops 
-        if str(laptop.get("id")) != str(laptop_id_to_remove)
+        if str(laptop.get("id")) != laptop_id_to_remove
     ]
     
-    # Update data dictionary
-    data["laptops"] = new_laptop_list
+    # Prepare data dictionary for saving
+    data_to_save = {"laptops": new_laptop_list}
 
     # Save updated inventory
     try:
-        with open(PICKLE_PATH, "wb") as f:
-            pickle.dump(data, f)
+        # Use 'file' instead of 'f' for better clarity
+        with open(PICKLE_PATH, "wb") as file:
+            pickle.dump(data_to_save, file)
+            
         print(f"\nLaptop with ID '{laptop_id_to_remove}' has been successfully removed.")
         print("Operation completed.\n")
+        
     except Exception as e:
+        # Catch and print the specific error for better diagnostics
         print(f"Error saving changes: {e}")
