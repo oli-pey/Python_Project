@@ -1,5 +1,5 @@
 import pickle
-import os
+from modules.Display import load_inventory
 from config.config import PICKLE_PATH, ALLOWED_BRANDS,ALLOWED_PROCESSORS
 
 def create_laptop():
@@ -7,49 +7,35 @@ def create_laptop():
     print("   ADD NEW LAPTOP TO INVENTORY")
     print("==============================\n")
 
-    # -------------------------------
-    #   LOAD EXISTING INVENTORY (YOUR REQUESTED LOGIC)
-    # -------------------------------
-    laptops = []
-
-    if os.path.exists(PICKLE_PATH):
-        try:
-            with open(PICKLE_PATH, "rb") as f:
-                data = pickle.load(f)
-                laptops = data.get("laptops", []) 
-        except Exception:
-            print("Warning: Could not read inventory file.")
-            exit()
-
+    laptops = load_inventory()
     existing_ids = [laptop.get("id") for laptop in laptops]
 
     # -------------------------------
     #   INPUT VALIDATION FUNCTIONS
     # -------------------------------
-
     def laptop_id_input():
         while True:
-            laptop_id = input("Enter laptop ID (4 digits): ").strip()
-            if not laptop_id:
+            laptop_id_str = input("Enter laptop ID (4 digits): ").strip()           
+            if not laptop_id_str:
                 print("Laptop ID cannot be empty.")
-            elif not laptop_id.isdigit():
+            elif not laptop_id_str.isdigit():
                 print("Laptop ID must be numeric.")
-            elif len(laptop_id) != 4:
+            elif len(laptop_id_str) != 4:
                 print("Laptop ID must be exactly 4 digits.")
-                laptop_id = int(laptop_id)
-            elif laptop_id in existing_ids:
+            else:
+                laptop_id = int(laptop_id_str)
+            if laptop_id in existing_ids:
                 print(f"Laptop ID {laptop_id} already exists. Choose another.")
             else:
-                return int(laptop_id)
-
+                return laptop_id 
+            
     def brand_input():
         while True:
             brand = input("Enter laptop manufacturer: ").strip()
             if not brand:
                 print("Brand cannot be empty.")
             elif brand not in ALLOWED_BRANDS:
-                # Fixed syntax: used single quotes inside the join to avoid conflict
-                print(f"Invalid brand. Allowed brands: {', '.join(ALLOWED_BRANDS)}")
+                print(f"Invalid brand. Allowed brands: {", ".join(ALLOWED_BRANDS)}")
             else:
                 return brand
 
@@ -64,8 +50,7 @@ def create_laptop():
                 return model
 
     def processor_input():
-        # Fixed syntax: used single quotes inside the join
-        print(f"Allowed Processors: {', '.join(ALLOWED_PROCESSORS)}")
+        print(f"Allowed Processors: {", ".join(ALLOWED_PROCESSORS)}")
         while True:
             processor = input("Enter processor: ").strip()
             if not processor in ALLOWED_PROCESSORS:
@@ -110,9 +95,7 @@ def create_laptop():
                 return False
             print("Invalid input. Enter Windows or macOS.")
 
-    # -------------------------------
     #   CAPTURE LAPTOP DETAILS
-    # -------------------------------
     laptop = {
         "id": laptop_id_input(),
         "brand": brand_input(),
@@ -134,9 +117,6 @@ def create_laptop():
     data_to_save = {"laptops": laptops}
 
     try:
-        # Ensure directory exists before saving
-        os.makedirs(os.path.dirname(PICKLE_PATH), exist_ok=True)
-        
         with open(PICKLE_PATH, "wb") as f:
             pickle.dump(data_to_save, f)
         
@@ -145,9 +125,5 @@ def create_laptop():
               f"with ID {laptop['id']} added successfully!")
         print("Operation completed.\n")
         
-    except Exception as e:
-        print(f"Error: Could not save to file. {e}")
-
-# Run the function
-if __name__ == "__main__":
-    create_laptop()
+    except Exception:
+        print("Error: Could not save to file.")

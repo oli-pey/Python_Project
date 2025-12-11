@@ -2,25 +2,24 @@ import os
 import pickle
 from config.config import PICKLE_PATH
 
+def load_inventory():
+        laptops = []
+
+        if os.path.exists(PICKLE_PATH):
+            try:
+                with open(PICKLE_PATH, "rb") as f:
+                    data = pickle.load(f)
+                    # Use .get() to avoid errors if the "laptops" key is missing inside the file
+                    laptops = data.get("laptops", []) 
+            except Exception:
+                # Handle corrupted files or read errors safely
+                print("Warning: Could not read inventory file")
+                exit()
+        return laptops
+
 def display_inventory():
-    laptops = []
-
-    if os.path.exists(PICKLE_PATH):
-        try:
-            with open(PICKLE_PATH, "rb") as f:
-                data = pickle.load(f)
-                # Use .get() to avoid errors if the "laptops" key is missing inside the file
-                laptops = data.get("laptops", []) 
-        except Exception:
-            # Handle corrupted files or read errors safely
-            print("Warning: Could not read inventory file. Starting with empty inventory.")
-            laptops = []
-        
-    if not laptops:
-        print("No laptops found in inventory.")
-        return
-
-
+    
+    laptops = load_inventory()
     # Print header
     print(f"{"ID":<6} {"Brand":<12} {"Model":<25} {"Processor":<25} {"RAM":<10} {"Storage":<12} {"OS":<8}")
     print("-" * 100)

@@ -1,20 +1,7 @@
-import os
-import pickle
-from config.config import PICKLE_PATH, ALLOWED_BRANDS
+from config.config import ALLOWED_BRANDS
+from modules.Display import load_inventory
 
 
-def load_inventory():
-    laptops = []
-    if os.path.exists(PICKLE_PATH):
-        try:
-            with open(PICKLE_PATH, "rb") as f:
-                data = pickle.load(f)
-                laptops = data.get("laptops", [])
-        except Exception:
-            print("Error: Could not read inventory file.")
-            exit()
-
-    return laptops
 
 
 def print_results(laptops):
