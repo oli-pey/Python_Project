@@ -1,7 +1,5 @@
 from config.config import ALLOWED_BRANDS
-from modules.Display import load_inventory
-
-
+from modules.Display import load_inventory, print_laptop_list # <-- Imported consolidated function
 
 
 def print_results(laptops):
@@ -9,17 +7,7 @@ def print_results(laptops):
         print("No laptops match the filter criteria.")
         return
 
-    print(f"Found {len(laptops)} matching laptop(s):")
-    print(f"{"ID":<6} {"Brand":<12} {"Model":<25} {"RAM":<8} {"Storage":<10} {"OS":<8}")
-    print("-" * 70)
-    for l in laptops:
-        laptop_id = l.get("id", "")
-        brand = l.get("brand", "")
-        model = l.get("model", "")
-        ram = f"{l.get("ram_gb", "")} GB" if l.get("ram_gb") is not None else ""
-        storage = f"{l.get("storage_gb", "")} GB" if l.get("storage_gb") is not None else ""
-        os_name = "MacOS" if l.get("is_macos", False) else "Windows"
-        print(f"{str(laptop_id):<6} {brand:<12} {model:<25} {ram:<8} {storage:<10} {os_name:<8}")
+    print_laptop_list(laptops)
 
 
 def filter_laptops():

@@ -2,7 +2,6 @@ from modules.Display import display_inventory
 from modules.Create import create_laptop
 from modules.Delete import delete_laptop
 from modules.Filter import filter_laptops
-import time
 
 def main():
     while True:
@@ -19,12 +18,10 @@ def main():
 
             if menuchoice < 1 or menuchoice > 4:
                 print("Invalid choice. Please enter a number between 1 and 4.")
-                time.sleep(2)
                 continue
 
         except ValueError:
             print("Invalid input. Please enter a number.")
-            time.sleep(2)
             continue 
 
         # --- Valid choices ---

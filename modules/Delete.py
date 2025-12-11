@@ -1,6 +1,6 @@
 import pickle
 import os
-import modules.Display as Display
+from modules.Display import display_inventory
 from config.config import PICKLE_PATH
 
 def delete_laptop():
@@ -8,7 +8,7 @@ def delete_laptop():
     print("   CURRENT LAPTOP INVENTORY")
     print("==============================\n")
     
-    Display.display_inventory()
+    display_inventory()
 
     print("\n==============================")
     print("   REMOVE LAPTOP FROM INVENTORY")
