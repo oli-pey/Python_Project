@@ -1,14 +1,6 @@
 import pickle
 import os
-
-# CONSTANTS
-PICKLE_PATH = "data/inventory.pkl"
-
-ALLOWED_BRANDS = ["Dell", "HP", "Lenovo", "Asus", "Acer", "Apple"]
-ALLOWED_PROCESSORS = [
-    "Intel Core i3", "Intel Core i5", "Intel Core i7", "Intel Core i9",
-    "AMD Ryzen 3", "AMD Ryzen 5", "AMD Ryzen 7", "AMD Ryzen 9",
-    "Apple M1", "Apple M2", "Apple M3"]
+from config.config import PICKLE_PATH, ALLOWED_BRANDS,ALLOWED_PROCESSORS
 
 def create_laptop():
     print("\n==============================")
@@ -26,8 +18,8 @@ def create_laptop():
                 data = pickle.load(f)
                 laptops = data.get("laptops", []) 
         except Exception:
-            print("Warning: Could not read inventory file. Starting with empty inventory.")
-            laptops = []
+            print("Warning: Could not read inventory file.")
+            exit()
 
     existing_ids = [laptop.get("id") for laptop in laptops]
 
@@ -48,7 +40,7 @@ def create_laptop():
             elif laptop_id in existing_ids:
                 print(f"Laptop ID {laptop_id} already exists. Choose another.")
             else:
-                return laptop_id
+                return int(laptop_id)
 
     def brand_input():
         while True:
@@ -86,8 +78,8 @@ def create_laptop():
             ram_value = input("Enter RAM in GB: ").strip()
             if not ram_value.isdigit():
                 print("Please enter a numeric value.")
-            else:
-                ram_gb = int(ram_value)
+                continue
+            ram_gb = int(ram_value)
             if not (8 <= ram_gb <= 256):
                 print("RAM must be between 8GB and 256GB.")
             elif ram_gb % 8 != 0:
@@ -97,11 +89,11 @@ def create_laptop():
 
     def storage_input():
         while True:
-            storage_gb =input("Enter storage in GB: ").strip()
-            if not storage_gb.isdigit():
+            storage_value = input("Enter storage in GB: ").strip()
+            if not storage_value.isdigit():
                 print("Please enter a numeric value.")
-            else:
-                storage_gb = int(storage_gb)
+                continue
+            storage_gb = int(storage_value)
             if not (256 <= storage_gb <= 2048):
                 print("Storage must be between 256GB and 2048GB.")
             elif storage_gb % 256 != 0:

@@ -1,6 +1,7 @@
 import pickle
 import os
 import modules.Display as Display
+from config.config import PICKLE_PATH
 
 def delete_laptop():
     print("\n==============================")
@@ -12,21 +13,19 @@ def delete_laptop():
     print("\n==============================")
     print("   REMOVE LAPTOP FROM INVENTORY")
     print("==============================\n")
-
-    pickle_path = "data/inventory.pkl"
     
     # --- FIX 1: Initialize 'data' early to prevent scope errors ---
     data = {"laptops": []} 
     laptops = []
 
-    if os.path.exists(pickle_path):
+    if os.path.exists(PICKLE_PATH):
         try:
-            with open(pickle_path, 'rb') as f:
+            with open(PICKLE_PATH, 'rb') as f:
                 data = pickle.load(f)
                 laptops = data.get('laptops', []) 
-        except Exception as e:
-            print(f"Warning: Could not read inventory file ({e}). Starting with empty inventory.")
-            # data is already initialized to empty above, so we are safe
+        except Exception:
+            print("Warning: Could not read inventory file")
+            exit()
 
     if not laptops:
         print("Inventory is empty or file not found. Nothing to delete.")
@@ -60,7 +59,7 @@ def delete_laptop():
 
     # Save updated inventory
     try:
-        with open(pickle_path, "wb") as f:
+        with open(PICKLE_PATH, "wb") as f:
             pickle.dump(data, f)
         print(f"\nLaptop with ID '{laptop_id_to_remove}' has been successfully removed.")
         print("Operation completed.\n")

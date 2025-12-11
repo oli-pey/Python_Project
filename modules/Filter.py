@@ -1,8 +1,6 @@
 import os
 import pickle
-from modules.Create import ALLOWED_BRANDS
-
-PICKLE_PATH = "data/inventory.pkl"
+from config.config import PICKLE_PATH, ALLOWED_BRANDS
 
 
 def load_inventory():
@@ -14,7 +12,7 @@ def load_inventory():
                 laptops = data.get("laptops", [])
         except Exception:
             print("Error: Could not read inventory file.")
-            laptops = []
+            exit()
 
     return laptops
 

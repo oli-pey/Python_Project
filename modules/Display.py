@@ -1,6 +1,6 @@
 import os
 import pickle
-PICKLE_PATH = "data/inventory.pkl"
+from config.config import PICKLE_PATH
 
 def display_inventory():
     laptops = []
