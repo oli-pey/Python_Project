@@ -9,11 +9,12 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py fil
 - If the user chooses __Filter Laptop__, he will be guided to a another menu where he can choose by what criteria he wishes to filter the inventory by. After that choice he will be prompted to enter one value or even two values to filter the inventory by. For example filter by brand and then the user inputs Apple, then all laptops with the brand Apple will appear.
   The project uses the Python built-in pickle module to handle all data persistence (writing, reading, and deletion) to a binary file named [inventory.pkl.]
 ## User Stories
-- As a user, I want to __see all stored laptops__, because it allows me to quickly review my current inventory without searching through files or notes.
-- As a user, I want to __delete__ a laptop entry, because it helps me keep the inventory up to date when devices are sold, disposed of, or no longer needed.
-- As a user, I want to __filter laptops__ by criteria (e.g. RAM, storage) to find ones meeting requirements, because it saves time when searching for specific device configurations and avoids manual sorting.
-- As a user, I want all changes to persist (so when I next run the app, I don’t lose data), because it prevents data loss and ensures the inventory remains consistent between sessions.
-- As a user, I want input validation so I don’t crash the program by entering invalid values, because it makes the tool reliable and user-friendly even for non-technical users.
+- As a user, I want to see all stored laptops displayed in a formatted table with all key criteria (ID, Brand, Model, Processor, RAM, Storage, and OS), because it allows me to quickly and clearly review my entire current inventory.
+- As a user, I want to be guided through a series of distinct inputs to create a new laptop entry, because it ensures all necessary details and configurations are recorded correctly.
+- As a user, I want robust input validation during the creation process (e.g., checking for unique 4-digit IDs, ensuring RAM/Storage are multiples of 8GB/256GB, and validating against allowed brands/processors), because it prevents data entry errors and maintains high data quality.
+- As a user, I want to delete a specific laptop entry by entering its unique ID after viewing the current inventory, because it helps me accurately keep the inventory up to date when a device is sold or removed.
+- As a user, I want to filter the inventory by single criteria (Brand, Min RAM, or Min Storage) or a combination (Min RAM AND Min Storage), because it saves time when searching for specific device configurations that meet hardware or manufacturer requirements.
+- As a user, I want all changes (additions and deletions) to be immediately saved to the data file, so that when I next run the app, I don’t lose any data and the inventory remains consistent.
 ## Use Cases
 - Display Inventory (from inventory.pkl)
 - Delete Laptop (from inventory.pkl)
