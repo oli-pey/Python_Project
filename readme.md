@@ -15,6 +15,7 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py fil
 - As a user, I want to delete a specific laptop entry by entering its unique ID after viewing the current inventory, because it helps me accurately keep the inventory up to date when a device is sold or removed.
 - As a user, I want to filter the inventory by single criteria (Brand, Min RAM, or Min Storage) or a combination (Min RAM AND Min Storage), because it saves time when searching for specific device configurations that meet hardware or manufacturer requirements.
 - As a user, I want all changes (additions and deletions) to be immediately saved to the data file, so that when I next run the app, I don’t lose any data and the inventory remains consistent.
+- As a user, I want to be able to type 'back' or 'exit' at any input prompt to cancel the current operation (Create, Delete, Filter) and return to the main menu, because it allows me to quickly navigate the application and prevent accidental data entry or modification.
 ## Use Cases
 | Use Case | Goal / Description | Key Functions Involved |
 | :--- | :--- | :--- |
@@ -23,12 +24,11 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py fil
 | **Delete Laptop** (Menu Option 3) | To display the current inventory, prompt the user for a valid Laptop ID, remove the corresponding entry, and save the change back to the `inventory.pkl` file. | `main()`, `delete_laptop()`, `display_inventory()`, `pickle.dump()` |
 | **Filter Inventory** (Menu Option 4) | To present a filter menu and display a subset of the inventory that matches the user's selected criteria (e.g., Min RAM, Brand, or a combination). | `main()`, `filter_laptops()`, `get_numeric_input()`, `get_brand_input()`, `print_results()` |
 ## Project Requirements
-## Project Requirements
-
 | Category | Requirement Description | Implementation Details / Citation |
 | :--- | :--- | :--- |
 | **1. Interactive App (Console Input)** | **Main Menu System** | The application must feature a menu requiring console input in `main.py`. |
 | | **Function Execution** | Based on the user’s selection, the program must call the corresponding function (display, create, delete, filter). |
+| | **Flexible navigation** | The program must allow users to exit a sub-menu (Create, Delete, Filter) and return to the main menu by typing a specific keyword (e.g., 'back' or 'exit') at any input prompt.|
 | **2. Data Validation** | **Menu Choice Validation** | Check whether the user’s input is a digit and corresponds to a valid menu option. |
 | | **Imputed Data Validation** | Validate imputed data when adding a new laptop (e.g., ensuring RAM input is a valid integer). |
 | | **Pickle File Handling** | When loading the pickled file, handle errors such as "file not found" or "unpickling error" using a `try/except` block, and initialize an empty list if needed. |
