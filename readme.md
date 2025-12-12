@@ -1,13 +1,13 @@
 # Laptop Inventory Manager
 ## Problem
- Many small businesses or individuals who manage multiple laptops don’t have a simple tool to track their device inventory with details like RAM, storage, model, etc. They often use spreadsheets, text files, or manual notetaking, which can lead to errors, missing records, and difficulty filtering or deleting entries.    Your program addresses this by providing a console tool to __store, display, filter, and delete__ laptop entries in a structured, persistent Form.
-## Scenario
-A user (e.g. a small-scale IT manager or tech hobbyist) launches your main.py in a terminal. They see a menu of options (Show Inventory, Display Laptop, Delete Laptop, Filter Laptop, etc.).
-- If they choose __Show Inventory__, the program lists all laptops currently stored.
-- If they choose __Display Laptop__, they can input an identifier (e.g. index or ID) to view one laptop’s detailed specs.
-- If they choose __Delete Laptop__, they input which laptop to remove.
-- If they choose __Filter Laptop__, they input criteria (e.g. “RAM > 16”) and the program shows matching laptops.
-  All operations read from and write to a __pickle file__ that stores the list of laptop objects, so the inventory is persistent across runs.
+ Many small businesses or individuals who manage multiple laptops don’t have a simple tool to track their device inventory with details like RAM, storage, model, etc. They often use spreadsheets, text files, or manual notetaking, which can lead to errors, missing records, and difficulty filtering or deleting entries.    Our program addresses this by providing a console tool to __store, display,add, filter, and delete__ laptop entries in a structured, persistent Form.
+## Scenarios
+A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py file in a terminal. They see a menu of options (Display Inventory, Create Laptop, Delete Laptop, Filter Laptop and exit the programm).
+- If the user chooses __Display Inventory__, a list will appear in the console displaying all the laptops with their criteras such as Brand,Model and other attributes.
+- If the user chooses __Create Laptop__, the user will be gudied through a list of inputs to add the details and configuration of the new Laptop. During the input of the data the programm will check for its validity esuring no wring inputs for examplse not two laptops with the same ID or no strange ram numbers like 37 GBs
+- If the user chooses __Delete Laptop__, a list of all the current inventory will appear and the user is promted to enter a laptop ID. The entered laptop id is then checked in the list for a valid laptop and if exists it will be deleted from the inventory.
+- If the user chooses __Filter Laptop__, he will be guided to a another menu where he can choose by what criteria he wishes to filter the inventory by. After that choice he will be prompted to enter one value or even two values to filter the inventory by. For example filter by brand and then the user inputs Apple, then all laptops with the brand Apple will appear.
+  The project uses the Python built-in pickle module to handle all data persistence (writing, reading, and deletion) to a binary file named [inventory.pkl.]
 ## User Stories
 - As a user, I want to __see all stored laptops__, because it allows me to quickly review my current inventory without searching through files or notes.
 - As a user, I want to __delete__ a laptop entry, because it helps me keep the inventory up to date when devices are sold, disposed of, or no longer needed.
