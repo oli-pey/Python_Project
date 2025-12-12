@@ -8,19 +8,20 @@ def display_inventory():
     laptops = load_inventory()
     if laptops:
         print_laptop_list(laptops)
-    elif laptops is not None:  # Only print if no error occurred during loading
+        # Print if no error occurred during loading to notify empty inventory
+    elif laptops is not None:  
         print("The inventory is currently empty.")
 
 
 def load_inventory():
     """
     Loads laptop data from the pickle file specified by PICKLE_PATH.
-    Returns a list of laptops or None if a critical error occurs.
+    Returns a list of laptops or None if an error occurs.
     """
+    # Initialize empty list
     laptops = []
-
+    # File doesn't exist yet (e.g., first run), return empty list
     if not os.path.exists(PICKLE_PATH):
-        # File doesn't exist yet (e.g., first run), return empty list
         return laptops
 
     try:
@@ -29,10 +30,10 @@ def load_inventory():
             data = pickle.load(file)
             laptops = data.get('laptops', []) 
     
-    except (EOFError, pickle.UnpicklingError, IOError) as e:
-        # Handles empty file, corrupt data, or file read errors
+    except (Exception):
+        # Exception handling for file read/unpickle errors
         print(f"Critical Error: Could not read or unpickle inventory file at {PICKLE_PATH}.")
-        print(f"Details: {e}")
+        return None
         
     return laptops
 

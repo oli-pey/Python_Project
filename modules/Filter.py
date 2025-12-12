@@ -23,77 +23,86 @@ def filter_laptops():
         print("No laptops found in inventory.")
         return
 
-    # Print menu and get choice
-    try:
-        menu_choice = int(input(
-                "If you want to display all devices, enter 1\n"
-                "If you want to add a new device, enter 2\n"
-                "If you want to delete a device, enter 3\n"
-                "If you want to filter for specific devices, enter 4\n"
-                "If you want to return to the main menu, enter 5\n"
-                "Your choice: "
-            ))
-    
-    
-    except ValueError:
-        print("Invalid input. Please enter a number.")
-        return
-
     results = []
+    
+    # Filter loop starts here, repeats until a filter is applied or user exits
+    while True:
+        # Print menu and get choice
+        menu = (
+            "Filter by:\n"
+            " 1) Minimum RAM (GB)\n"
+            " 2) Minimum Storage (GB)\n"
+            " 3) Brand\n"
+            " 4) Minimum RAM AND Minimum Storage (GB)\n"
+            " 5) Return to the main menu\n"
+            "Your choice: "
+        )
 
-    # 1. Filter by Minimum RAM
-    if menu_choice == 1:
         try:
-            min_ram = int(input("Min RAM (GB): ").strip())
-            results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
-        except ValueError:
-            print("Invalid input. Please enter a numeric RAM value.")
-            return
-
-    # 2. Filter by Minimum Storage
-    elif menu_choice == 2:
-        try:
-            min_storage = int(input("Min Storage (GB): ").strip())
-            results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
-        except ValueError:
-            print("Invalid input. Please enter a numeric storage value.")
-            return
-
-    # 3. Filter by Brand (Corrected choice number from 4 to 3)
-    elif menu_choice == 3:
-        # PEP 8 spacing around the join method
-        print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
-        brand_choice = input("Brand: ").strip()
+            menu_choice = int(input(menu).strip())
         
-        if brand_choice.upper() not in [b.upper() for b in ALLOWED_BRANDS]:
-            print(f"Invalid brand. Please select from: {', '.join(ALLOWED_BRANDS)}")
-            return
-            
-        results = [l for l in laptops if l.get("brand", "").lower() == brand_choice.lower()]
-
-    # 4. Filter by Min RAM AND Min Storage (Corrected choice number from 5 to 4)
-    elif menu_choice == 4:
-        try:
-            min_ram = int(input("Min RAM (GB): ").strip())
-            min_storage = int(input("Min Storage (GB): ").strip())
-            
-            # Improved readability for the list comprehension over multiple lines
-            results = [
-                l for l in laptops 
-                if int(l.get("ram_gb", 0)) >= min_ram 
-                and int(l.get("storage_gb", 0)) >= min_storage
-            ]
         except ValueError:
-            print("Invalid input. Please enter numeric values for both RAM and Storage.")
-            return
+            print("Invalid input. Please enter a number.")
+            continue # Restart the while loop (re-show menu)
+
+        # 1. Filter by Minimum RAM
+        if menu_choice == 1:
+            try:
+                min_ram = int(input("Min RAM (GB): ").strip())
+                results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
+                break # Exit loop to print results
+            except ValueError:
+                print("Invalid input. Please enter a numeric RAM value.")
+                continue # Restart the while loop
+
+        # 2. Filter by Minimum Storage
+        elif menu_choice == 2:
+            try:
+                min_storage = int(input("Min Storage (GB): ").strip())
+                results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
+                break # Exit loop to print results
+            except ValueError:
+                print("Invalid input. Please enter a numeric storage value.")
+                continue # Restart the while loop
+
+        # 3. Filter by Brand
+        elif menu_choice == 3:
+            print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
+            brand_choice = input("Brand: ").strip()
+            
+            # Consistent case-insensitive validation
+            if brand_choice.upper() not in [b.upper() for b in ALLOWED_BRANDS]:
+                print(f"Invalid brand. Please select from: {', '.join(ALLOWED_BRANDS)}")
+                continue # Restart the while loop
+                
+            results = [l for l in laptops if l.get("brand", "").lower() == brand_choice.lower()]
+            break # Exit loop to print results
+
+        # 4. Filter by Min RAM AND Min Storage
+        elif menu_choice == 4:
+            try:
+                min_ram = int(input("Min RAM (GB): ").strip())
+                min_storage = int(input("Min Storage (GB): ").strip())
+                
+                results = [
+                    l for l in laptops 
+                    if int(l.get("ram_gb", 0)) >= min_ram 
+                    and int(l.get("storage_gb", 0)) >= min_storage
+                ]
+                break # Exit loop to print results
+            except ValueError:
+                print("Invalid input. Please enter numeric values for both RAM and Storage.")
+                continue # Restart the while loop
+            
+        # 5. Return to Main Menu - Exit logic is clean
+        elif menu_choice == 5:
+            print("Returning to main menu.")
+            return # Exit the function entirely
         
-    # 5. Return to Main Menu
-    elif menu_choice == 5:
-        print("Returning to main menu.")
-        return
+        # Handle all other invalid numerical choices
+        else:
+            print("Invalid choice.")
+            continue # Restart the while loop (re-show menu)
 
-    else:
-        print("Invalid choice.")
-        return
-
+    # This line is only reached if a filter was successfully applied (break was hit)
     print_results(results)

@@ -49,7 +49,7 @@ def create_laptop():
                 return None
             if not brand:
                 print("Brand cannot be empty.")
-            elif brand not in ALLOWED_BRANDS:
+            elif brand.title() not in ALLOWED_BRANDS:
                 print(f"Invalid brand. Allowed brands: {', '.join(ALLOWED_BRANDS)}")
             else:
                 return brand
@@ -132,7 +132,6 @@ def create_laptop():
                 return False
             print("Invalid input. Enter Windows or macOS.")
 
-
     laptop_id = laptop_id_input()
     if laptop_id is None: return
     
@@ -156,18 +155,15 @@ def create_laptop():
 
     # CAPTURE LAPTOP DETAILS
     laptop = {
-        "id": laptop_id_input(),
-        "brand": brand_input(),
-        "model": model_input(),
-        "processor": processor_input(),
-        "ram_gb": ram_input(),
-        "storage_gb": storage_input(),
-        "is_macos": os_input(),
+        "id": laptop_id,
+        "brand": brand(),
+        "model": model,
+        "processor": processor,
+        "ram_gb": ram_gb,
+        "storage_gb": storage_gb,
+        "is_macos": is_macos,
     }
-
-    # -------------------------------
-    #    SAVE TO INVENTORY
-    # -------------------------------
+    # SAVE TO PICKLE FILE
     # Append the new laptop to the list we loaded earlier
     laptops.append(laptop)
     
@@ -185,5 +181,4 @@ def create_laptop():
         print("Operation completed.\n")
         
     except Exception:
-        # Catching a specific exception like IOError might be better, but keeping general
         print("Error: Could not save to file.")
