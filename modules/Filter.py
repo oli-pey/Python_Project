@@ -7,13 +7,28 @@ def print_results(laptops):
     if not laptops:
         print("No laptops match the filter criteria.")
         return
-
     print_laptop_list(laptops)
 
+def get_numeric_input(prompt):
+    """Prompts user for a numeric input until valid."""
+    while True:
+        try:
+            return int(input(prompt).strip())
+        except ValueError:
+            print("Invalid input. Please enter a numeric value.")
+
+def get_brand_input():
+    """Prompts user to select a valid brand."""
+    allowed_upper = [b.upper() for b in ALLOWED_BRANDS]
+    while True:
+        print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
+        brand_choice = input("Brand: ").strip()
+        if brand_choice.upper() in allowed_upper:
+            return brand_choice
+        print(f"Invalid brand. Please select from: {', '.join(ALLOWED_BRANDS)}")
 
 def filter_laptops():
     """Provides a menu for filtering the laptop inventory by various criteria."""
-    
     print("\n==============================")
     print("     FILTER LAPTOP INVENTORY")
     print("==============================\n")
@@ -23,86 +38,48 @@ def filter_laptops():
         print("No laptops found in inventory.")
         return
 
-    results = []
-    
-    # Filter loop starts here, repeats until a filter is applied or user exits
     while True:
-        # Print menu and get choice
-        menu = (
-            "Filter by:\n"
-            " 1) Minimum RAM (GB)\n"
-            " 2) Minimum Storage (GB)\n"
-            " 3) Brand\n"
-            " 4) Minimum RAM AND Minimum Storage (GB)\n"
-            " 5) Return to the main menu\n"
-            "Your choice: "
-        )
+        menu = ("Filter by:\n"
+                " 1) Minimum RAM (GB)\n"
+                " 2) Minimum Storage (GB)\n"
+                " 3) Brand\n"
+                " 4) Minimum RAM AND Minimum Storage (GB)\n"
+                " 5) Return to the main menu\n"
+                "Your choice: ")
 
         try:
-            menu_choice = int(input(menu).strip())
-        
+            choice = int(input(menu).strip())
         except ValueError:
             print("Invalid input. Please enter a number.")
-            continue # Restart the while loop (re-show menu)
+            continue
 
-        # 1. Filter by Minimum RAM
-        if menu_choice == 1:
-            try:
-                min_ram = int(input("Min RAM (GB): ").strip())
-                results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
-                break # Exit loop to print results
-            except ValueError:
-                print("Invalid input. Please enter a numeric RAM value.")
-                continue # Restart the while loop
+        results = []
 
-        # 2. Filter by Minimum Storage
-        elif menu_choice == 2:
-            try:
-                min_storage = int(input("Min Storage (GB): ").strip())
-                results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
-                break # Exit loop to print results
-            except ValueError:
-                print("Invalid input. Please enter a numeric storage value.")
-                continue # Restart the while loop
+        if choice == 1:  # Filter by RAM
+            min_ram = get_numeric_input("Min RAM (GB): ")
+            results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram]
 
-        # 3. Filter by Brand
-        elif menu_choice == 3:
-            print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
-            brand_choice = input("Brand: ").strip()
-            
-            # Consistent case-insensitive validation
-            if brand_choice.upper() not in [b.upper() for b in ALLOWED_BRANDS]:
-                print(f"Invalid brand. Please select from: {', '.join(ALLOWED_BRANDS)}")
-                continue # Restart the while loop
-                
-            results = [l for l in laptops if l.get("brand", "").lower() == brand_choice.lower()]
-            break # Exit loop to print results
+        elif choice == 2:  # Filter by Storage
+            min_storage = get_numeric_input("Min Storage (GB): ")
+            results = [l for l in laptops if int(l.get("storage_gb", 0)) >= min_storage]
 
-        # 4. Filter by Min RAM AND Min Storage
-        elif menu_choice == 4:
-            try:
-                min_ram = int(input("Min RAM (GB): ").strip())
-                min_storage = int(input("Min Storage (GB): ").strip())
-                
-                results = [
-                    l for l in laptops 
-                    if int(l.get("ram_gb", 0)) >= min_ram 
-                    and int(l.get("storage_gb", 0)) >= min_storage
-                ]
-                break # Exit loop to print results
-            except ValueError:
-                print("Invalid input. Please enter numeric values for both RAM and Storage.")
-                continue # Restart the while loop
-            
-        # 5. Return to Main Menu - Exit logic is clean
-        elif menu_choice == 5:
+        elif choice == 3:  # Filter by Brand
+            brand = get_brand_input()
+            results = [l for l in laptops if l.get("brand", "").lower() == brand.lower()]
+
+        elif choice == 4:  # Filter by RAM and Storage
+            min_ram = get_numeric_input("Min RAM (GB): ")
+            min_storage = get_numeric_input("Min Storage (GB): ")
+            results = [l for l in laptops if int(l.get("ram_gb", 0)) >= min_ram and int(l.get("storage_gb", 0)) >= min_storage]
+
+        elif choice == 5:  # Exit to main menu
             print("Returning to main menu.")
-            return # Exit the function entirely
-        
-        # Handle all other invalid numerical choices
+            return
+
         else:
             print("Invalid choice.")
-            continue # Restart the while loop (re-show menu)
+            continue
 
-    # This line is only reached if a filter was successfully applied (break was hit)
-    print_results(results)
+        #Pass results to display function
+        print_results(results)
+        break
