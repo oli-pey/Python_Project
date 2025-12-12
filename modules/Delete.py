@@ -15,7 +15,7 @@ def delete_laptop():
         print("Inventory is empty. Nothing to delete.")
         return
     else:   
-        display_inventory(laptops)
+        display_inventory()
 
     print("\n==============================")
     print("     REMOVE LAPTOP FROM INVENTORY")
@@ -57,7 +57,6 @@ def delete_laptop():
         print("Operation completed.\n")
         
     except Exception as e:
-        # Catch and print the specific error for better diagnostics
         print(f"Error saving changes: {e}")
 
         

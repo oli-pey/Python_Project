@@ -179,5 +179,5 @@ def create_laptop():
               f"with ID {laptop['id']} added successfully!")
         print("Operation completed.\n")
         
-    except Exception:
-        print("Error: Could not save to file.")
+    except Exception as e:
+        print(f"Error saving changes: {e}")

@@ -29,11 +29,11 @@ def load_inventory():
             # Assuming the data is stored as a dictionary with a 'laptops' key
             data = pickle.load(pickle_file)
             laptops = data.get('laptops', []) 
-    
+        return laptops
     except Exception as e:
         print(f"Critical Error: Could not read or unpickle inventory file: {e}")
         return None
-    return laptops
+    
 
 
 def print_laptop_list(laptops):
