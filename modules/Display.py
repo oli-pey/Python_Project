@@ -4,14 +4,14 @@ from config.config import PICKLE_PATH
 
 
 def display_inventory():
-    "Loads and displays the current inventory of laptops."""
+    """Loads and displays the current inventory of laptops."""
     laptops = load_inventory()
-    if laptops:
-        print_laptop_list(laptops)
-        # Print if no error occurred during loading to notify empty inventory
-    elif laptops is not None:  
+    if laptops is None:
+        print("Error loading inventory.")
+    elif len(laptops) == 0:
         print("The inventory is currently empty.")
-
+    else:
+        print_laptop_list(laptops)
 
 def load_inventory():
     """
@@ -25,16 +25,14 @@ def load_inventory():
         return laptops
 
     try:
-        with open(PICKLE_PATH, 'rb') as file:
+        with open(PICKLE_PATH, 'rb') as pickle_file:
             # Assuming the data is stored as a dictionary with a 'laptops' key
-            data = pickle.load(file)
+            data = pickle.load(pickle_file)
             laptops = data.get('laptops', []) 
     
-    except (Exception):
-        # Exception handling for file read/unpickle errors
-        print(f"Critical Error: Could not read or unpickle inventory file at {PICKLE_PATH}.")
+    except Exception as e:
+        print(f"Critical Error: Could not read or unpickle inventory file: {e}")
         return None
-        
     return laptops
 
 

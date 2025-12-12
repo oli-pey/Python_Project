@@ -10,36 +10,34 @@ def delete_laptop():
     print("==============================\n")
     
     # Display current inventory for user reference
-    display_inventory()
+    laptops = load_inventory()
+    if not laptops:
+        print("Inventory is empty. Nothing to delete.")
+        return
+    else:   
+        display_inventory(laptops)
 
     print("\n==============================")
     print("     REMOVE LAPTOP FROM INVENTORY")
     print("==============================\n")
-    
-    # Use load_inventory to handle reading data and error checks
-    laptops = load_inventory()
-
-    if not laptops:
-        print("Inventory is empty. Nothing to delete.")
-        return
 
     # Normalize IDs to Strings for comparison (ensuring consistency with user input)
     # Using 'str()' handles cases where IDs might be stored as int or str
     existing_ids = [str(laptop.get("id")) for laptop in laptops]
 
-    laptop_id_to_remove = None
     while True:
-        user_input = input("Please enter the Laptop ID to remove: ").strip()
+        user_input = input("Enter the Laptop ID to remove: ").strip()
         if user_input.lower() in ["back", "exit"]:
             print("Returning to main menu.")
             return
-        # Check if ID exists (comparing strings)
+        if not user_input.isdigit():
+            print("Laptop ID must be numeric. Try again.")
+            continue
         if user_input not in existing_ids:
             print(f"No laptop found with ID '{user_input}'. Please try again.")
             continue
-
         laptop_id_to_remove = user_input
-        break 
+        break
 
     # Robust Deletion Logic: Creates a new list excluding the item with the matching ID
     new_laptop_list = [
@@ -52,9 +50,8 @@ def delete_laptop():
 
     # Save updated inventory
     try:
-        # Use 'file' instead of 'f' for better clarity
-        with open(PICKLE_PATH, "wb") as file:
-            pickle.dump(data_to_save, file)
+        with open(PICKLE_PATH, "wb") as pickle_file:
+            pickle.dump(data_to_save, pickle_file)
             
         print(f"\nLaptop with ID '{laptop_id_to_remove}' has been successfully removed.")
         print("Operation completed.\n")

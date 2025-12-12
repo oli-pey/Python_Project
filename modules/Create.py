@@ -10,12 +10,12 @@ def create_laptop():
     print("==============================\n")
 
     laptops = load_inventory()
+    if laptops is None:
+        print("Could not load inventory. Aborting.")
+        return
     existing_ids = [laptop.get('id') for laptop in laptops]
 
-    # -------------------------------
     #    INPUT VALIDATION FUNCTIONS
-    # -------------------------------
-    
     def laptop_id_input():
         """Prompts and validates for a unique, 4-digit numeric laptop ID."""
         while True:
@@ -25,7 +25,7 @@ def create_laptop():
                 print("Returning to main menu.")
                 return None
             
-            if not laptop_id_str:
+            if laptop_id_str == "":
                 print("Laptop ID cannot be empty.")
             elif not laptop_id_str.isdigit():
                 print("Laptop ID must be numeric.")
@@ -47,12 +47,12 @@ def create_laptop():
             if brand.lower() in ["back", "exit"]:
                 print("Returning to main menu.")
                 return None
-            if not brand:
+            elif brand == "":
                 print("Brand cannot be empty.")
             elif brand.title() not in ALLOWED_BRANDS:
                 print(f"Invalid brand. Allowed brands: {', '.join(ALLOWED_BRANDS)}")
             else:
-                return brand
+                return brand.title()
 
     def model_input():
         """Prompts and validates for a non-empty laptop model (max 25 characters)."""
@@ -61,7 +61,7 @@ def create_laptop():
             if model.lower() in ["back", "exit"]:
                 print("Returning to main menu.")
                 return None
-            if not model:
+            if model == "":
                 print("Model cannot be empty.")
             elif len(model) > 25:
                 print("Model name too long (max 25 characters).")
@@ -156,7 +156,7 @@ def create_laptop():
     # CAPTURE LAPTOP DETAILS
     laptop = {
         "id": laptop_id,
-        "brand": brand(),
+        "brand": brand,
         "model": model,
         "processor": processor,
         "ram_gb": ram_gb,
@@ -171,9 +171,8 @@ def create_laptop():
     data_to_save = {"laptops": laptops}
 
     try:
-        # Use 'file' instead of 'f' for better clarity, though 'f' is common
-        with open(PICKLE_PATH, "wb") as file:
-            pickle.dump(data_to_save, file)
+        with open(PICKLE_PATH, "wb") as pickle_file:
+            pickle.dump(data_to_save, pickle_file)
         
         # Use implicit string concatenation over multiple lines, properly formatted
         print(f"\nLaptop {laptop['brand']} {laptop['model']} "
