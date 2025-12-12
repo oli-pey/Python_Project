@@ -30,7 +30,9 @@ def delete_laptop():
     laptop_id_to_remove = None
     while True:
         user_input = input("Please enter the Laptop ID to remove: ").strip()
-
+        if user_input.lower() in ["back", "exit"]:
+            print("Returning to main menu.")
+            return
         # Check if ID exists (comparing strings)
         if user_input not in existing_ids:
             print(f"No laptop found with ID '{user_input}'. Please try again.")
@@ -60,3 +62,5 @@ def delete_laptop():
     except Exception as e:
         # Catch and print the specific error for better diagnostics
         print(f"Error saving changes: {e}")
+
+        

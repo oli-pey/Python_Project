@@ -41,9 +41,6 @@ def main():
         elif menu_choice == 4:
             print("\n--- Filter for specific devices ---")
             filter_laptops()
-            
-        # Instruct user to press Enter to return to main menu
-        input("\nPress Enter to return to the main menu...")
 
 
 if __name__ == '__main__':

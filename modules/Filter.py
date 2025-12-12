@@ -24,17 +24,17 @@ def filter_laptops():
         return
 
     # Print menu and get choice
-    print("\nFilter by:")
-    menu = (
-        " 1) Minimum RAM (GB)\n"
-        " 2) Minimum Storage (GB)\n"
-        " 3) Brand\n"  # Corrected menu option order
-        " 4) Min RAM AND Min Storage (GB)"
-    )
-    
     try:
-        # Use snake_case for the variable
-        menu_choice = int(input(f"{menu}\nYour choice: "))
+        menu_choice = int(input(
+                "If you want to display all devices, enter 1\n"
+                "If you want to add a new device, enter 2\n"
+                "If you want to delete a device, enter 3\n"
+                "If you want to filter for specific devices, enter 4\n"
+                "If you want to return to the main menu, enter 5\n"
+                "Your choice: "
+            ))
+    
+    
     except ValueError:
         print("Invalid input. Please enter a number.")
         return
@@ -86,6 +86,11 @@ def filter_laptops():
         except ValueError:
             print("Invalid input. Please enter numeric values for both RAM and Storage.")
             return
+        
+    # 5. Return to Main Menu
+    elif menu_choice == 5:
+        print("Returning to main menu.")
+        return
 
     else:
         print("Invalid choice.")
