@@ -4,6 +4,7 @@ from config.config import PICKLE_PATH
 from config.config import ALLOWED_BRANDS
 from config.config import ALLOWED_PROCESSORS
 
+
 def create_laptop():
     """
     Handle user interaction for creating a new laptop entry
@@ -49,7 +50,6 @@ def create_laptop():
             if laptop_id in existing_ids:
                 print(f"Laptop ID {laptop_id} already exists. Choose another.")
                 continue
-
             return laptop_id
 
     def brand_input():
@@ -71,7 +71,6 @@ def create_laptop():
             if brand_title not in ALLOWED_BRANDS:
                 print(f"Invalid brand. Allowed: {', '.join(ALLOWED_BRANDS)}")
                 continue
-
             return brand_title
 
     def model_input():
@@ -90,7 +89,6 @@ def create_laptop():
             if len(model) > 25:
                 print("Model name too long (max 25 characters).")
                 continue
-
             return model
 
     def processor_input():
@@ -107,7 +105,6 @@ def create_laptop():
             if processor not in ALLOWED_PROCESSORS:
                 print("Invalid processor. Choose from the allowed list.")
                 continue
-
             return processor
 
     def ram_input():
@@ -132,7 +129,6 @@ def create_laptop():
             if ram_gb % 8 != 0:
                 print("RAM must be a multiple of 8GB.")
                 continue
-
             return ram_gb
 
     def storage_input():
@@ -157,7 +153,6 @@ def create_laptop():
             if storage_gb % 256 != 0:
                 print("Storage must be a multiple of 256GB.")
                 continue
-
             return storage_gb
 
     def os_input():
@@ -174,7 +169,6 @@ def create_laptop():
 
             if os_name == "windows":
                 return False
-
             print("Invalid input. Enter Windows or macOS.")
 
     # -------------------------
