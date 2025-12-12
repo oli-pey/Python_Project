@@ -1,63 +1,64 @@
 import pickle
-from modules.Display import display_inventory, load_inventory 
+from modules.display import display_inventory, load_inventory
 from config.config import PICKLE_PATH
 
 
 def delete_laptop():
-    """Handles the user interaction for deleting a laptop entry from the inventory."""
+    """Handle user input for deleting a laptop entry from the inventory."""
     print("\n==============================")
     print("     CURRENT LAPTOP INVENTORY")
     print("==============================\n")
-    
-    # Display current inventory for user reference
+
     laptops = load_inventory()
+
     if not laptops:
         print("Inventory is empty. Nothing to delete.")
         return
-    else:   
-        display_inventory()
+
+    display_inventory()
 
     print("\n==============================")
     print("     REMOVE LAPTOP FROM INVENTORY")
     print("==============================\n")
 
-    # Normalize IDs to Strings for comparison (ensuring consistency with user input)
-    # Using 'str()' handles cases where IDs might be stored as int or str
     existing_ids = [laptop.get("id") for laptop in laptops]
 
     while True:
         user_input = input("Enter the Laptop ID to remove: ").strip()
-        if user_input.lower() in ["back", "exit"]:
+
+        if user_input.lower() in ("back", "exit"):
             print("Returning to main menu.")
             return
+
         if not user_input.isdigit():
             print("Laptop ID must be numeric. Try again.")
             continue
 
-        # Convert to int for consistent comparison with stored IDs
         laptop_id_to_remove = int(user_input)
 
         if laptop_id_to_remove not in existing_ids:
-            # Note: We use user_input (the string) in the printout for better user context
             print(f"No laptop found with ID '{user_input}'. Please try again.")
             continue
+
         break
 
-    # Robust Deletion Logic: Creates a new list excluding the item with the matching ID
-    new_laptop_list = [laptop for laptop in laptops if laptop.get("id") != laptop_id_to_remove]
-    
-    # Prepare data dictionary for saving
+    # Create new list excluding the laptop with matching ID
+    new_laptop_list = [
+        laptop for laptop in laptops
+        if laptop.get("id") != laptop_id_to_remove
+    ]
+
     data_to_save = {"laptops": new_laptop_list}
 
-    # Save updated inventory
     try:
         with open(PICKLE_PATH, "wb") as pickle_file:
             pickle.dump(data_to_save, pickle_file)
-            
-        print(f"\nLaptop with ID '{laptop_id_to_remove}' has been successfully removed.")
-        print("Operation completed.\n")
-        
-    except Exception as e:
-        print(f"Error saving changes: {e}")
 
-        
+        print(
+            f"\nLaptop with ID '{laptop_id_to_remove}' "
+            "has been successfully removed."
+        )
+        print("Operation completed.\n")
+
+    except Exception as exc:
+        print(f"Error saving changes: {exc}")
