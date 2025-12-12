@@ -1,5 +1,6 @@
 import pickle
-from modules.display import display_inventory, load_inventory
+from modules.display import display_inventory
+from modules.display import load_inventory
 from config.config import PICKLE_PATH
 
 

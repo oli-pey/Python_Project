@@ -1,14 +1,12 @@
-"""
-Laptop Inventory Program
-Provides a menu interface to display, create, delete, and filter laptop entries
-"""
-
-# Import of modules (absolute imports are generally preferred)
 from modules.display import display_inventory
 from modules.create import create_laptop
 from modules.delete import delete_laptop
 from modules.filter import filter_laptops
 
+"""
+Laptop Inventory Program
+Provides a menu interface to display, create, delete, and filter laptop entries
+"""
 
 def main():
     """Main program loop for user interaction."""

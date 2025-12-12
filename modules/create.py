@@ -1,7 +1,8 @@
 import pickle
 from modules.display import load_inventory
-from config.config import PICKLE_PATH, ALLOWED_BRANDS, ALLOWED_PROCESSORS
-
+from config.config import PICKLE_PATH
+from config.config import ALLOWED_BRANDS
+from config.config import ALLOWED_PROCESSORS
 
 def create_laptop():
     """

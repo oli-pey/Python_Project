@@ -1,6 +1,6 @@
+from modules.display import print_laptop_list
+from modules.display import load_inventory
 from config.config import ALLOWED_BRANDS
-from modules.display import load_inventory, print_laptop_list
-
 
 def print_results(laptops):
     """Print the list of laptops matching the filter criteria."""
