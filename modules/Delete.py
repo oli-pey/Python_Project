@@ -23,7 +23,7 @@ def delete_laptop():
 
     # Normalize IDs to Strings for comparison (ensuring consistency with user input)
     # Using 'str()' handles cases where IDs might be stored as int or str
-    existing_ids = [str(laptop.get("id")) for laptop in laptops]
+    existing_ids = [laptop.get("id") for laptop in laptops]
 
     while True:
         user_input = input("Enter the Laptop ID to remove: ").strip()
@@ -33,17 +33,18 @@ def delete_laptop():
         if not user_input.isdigit():
             print("Laptop ID must be numeric. Try again.")
             continue
-        if user_input not in existing_ids:
+
+        # Convert to int for consistent comparison with stored IDs
+        laptop_id_to_remove = int(user_input)
+
+        if laptop_id_to_remove not in existing_ids:
+            # Note: We use user_input (the string) in the printout for better user context
             print(f"No laptop found with ID '{user_input}'. Please try again.")
             continue
-        laptop_id_to_remove = user_input
         break
 
     # Robust Deletion Logic: Creates a new list excluding the item with the matching ID
-    new_laptop_list = [
-        laptop for laptop in laptops 
-        if str(laptop.get("id")) != laptop_id_to_remove
-    ]
+    new_laptop_list = [laptop for laptop in laptops if laptop.get("id") != laptop_id_to_remove]
     
     # Prepare data dictionary for saving
     data_to_save = {"laptops": new_laptop_list}
