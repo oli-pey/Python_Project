@@ -29,6 +29,7 @@ def create_laptop():
             elif len(laptop_id_str) != 4:
                 print("Laptop ID must be exactly 4 digits.")
             else:
+            # Convert the valid string to an integer for storage
                 laptop_id = int(laptop_id_str)
                 if laptop_id in existing_ids:
                     print(f"Laptop ID {laptop_id} already exists. Choose another.")
@@ -37,12 +38,12 @@ def create_laptop():
 
     def brand_input():
         """Prompts and validates for a brand against the ALLOWED_BRANDS list."""
+        print(f"Allowed Brands: {', '.join(ALLOWED_BRANDS)}")
         while True:
             brand = input("Enter laptop manufacturer: ").strip()
             if not brand:
                 print("Brand cannot be empty.")
             elif brand not in ALLOWED_BRANDS:
-                # Clean PEP 8 spacing in f-string
                 print(f"Invalid brand. Allowed brands: {', '.join(ALLOWED_BRANDS)}")
             else:
                 return brand
@@ -124,7 +125,6 @@ def create_laptop():
     # -------------------------------
     #    SAVE TO INVENTORY
     # -------------------------------
-    
     # Append the new laptop to the list we loaded earlier
     laptops.append(laptop)
     
