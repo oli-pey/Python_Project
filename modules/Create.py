@@ -181,3 +181,4 @@ def create_laptop():
         
     except Exception as e:
         print(f"Error saving changes: {e}")
+        

@@ -42,6 +42,5 @@ def main():
             print("\n--- Filter for specific devices ---")
             filter_laptops()
 
-
 if __name__ == '__main__':
     main()
