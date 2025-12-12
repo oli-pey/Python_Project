@@ -16,10 +16,14 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py fil
 - As a user, I want to filter the inventory by single criteria (Brand, Min RAM, or Min Storage) or a combination (Min RAM AND Min Storage), because it saves time when searching for specific device configurations that meet hardware or manufacturer requirements.
 - As a user, I want all changes (additions and deletions) to be immediately saved to the data file, so that when I next run the app, I don’t lose any data and the inventory remains consistent.
 ## Use Cases
-- Display Inventory (from inventory.pkl)
-- Delete Laptop (from inventory.pkl)
-- Create Laptop (with imput validation and write to inventory.pkl)
-- Filter Inventory ( Display Items from inventory.pkl matching filter criteria)
+## Use Cases
+
+| Use Case | Goal / Description | Key Functions Involved |
+| :--- | :--- | :--- |
+| **Display Inventory** (Menu Option 1) | To load and display the complete list of laptops from the persistent data file (`inventory.pkl`) in a formatted table. | `main()`, `display_inventory()`, `load_inventory()`, `print_laptop_list()` |
+| **Create Laptop** (Menu Option 2) | To guide the user through a set of validated inputs to define a new laptop, append it to the inventory, and save the updated list to `inventory.pkl`. | `main()`, `create_laptop()`, input validation helpers, `pickle.dump()` |
+| **Delete Laptop** (Menu Option 3) | To display the current inventory, prompt the user for a valid Laptop ID, remove the corresponding entry, and save the change back to the `inventory.pkl` file. | `main()`, `delete_laptop()`, `display_inventory()`, `pickle.dump()` |
+| **Filter Inventory** (Menu Option 4) | To present a filter menu and display a subset of the inventory that matches the user's selected criteria (e.g., Min RAM, Brand, or a combination). | `main()`, `filter_laptops()`, `get_numeric_input()`, `get_brand_input()`, `print_results()` |
 ## Project Requirements
 ### 1. Interactive App (Console Input)
 - Menu requiring console input in main.py
