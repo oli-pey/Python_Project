@@ -16,8 +16,6 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py fil
 - As a user, I want to filter the inventory by single criteria (Brand, Min RAM, or Min Storage) or a combination (Min RAM AND Min Storage), because it saves time when searching for specific device configurations that meet hardware or manufacturer requirements.
 - As a user, I want all changes (additions and deletions) to be immediately saved to the data file, so that when I next run the app, I don’t lose any data and the inventory remains consistent.
 ## Use Cases
-## Use Cases
-
 | Use Case | Goal / Description | Key Functions Involved |
 | :--- | :--- | :--- |
 | **Display Inventory** (Menu Option 1) | To load and display the complete list of laptops from the persistent data file (`inventory.pkl`) in a formatted table. | `main()`, `display_inventory()`, `load_inventory()`, `print_laptop_list()` |
@@ -25,15 +23,15 @@ A user (e.g. a small-scale IT manager or tech hobbyist) launches the main.py fil
 | **Delete Laptop** (Menu Option 3) | To display the current inventory, prompt the user for a valid Laptop ID, remove the corresponding entry, and save the change back to the `inventory.pkl` file. | `main()`, `delete_laptop()`, `display_inventory()`, `pickle.dump()` |
 | **Filter Inventory** (Menu Option 4) | To present a filter menu and display a subset of the inventory that matches the user's selected criteria (e.g., Min RAM, Brand, or a combination). | `main()`, `filter_laptops()`, `get_numeric_input()`, `get_brand_input()`, `print_results()` |
 ## Project Requirements
-### 1. Interactive App (Console Input)
-- Menu requiring console input in main.py
-- Based on the user’s selection, the program calls the corresponding function (show, display, delete, filter).
-### 2. Data Validation
-- Menu choice: check whether the user’s input is a digit and corresponds to a valid menu option (e.g. if not choice.isdigit() or int(choice) not in allowed options: …).
-- Validation of imputed data when adding a new laptop (example ram only allow int)
-- When loading the pickled file: handle errors such as “file not found” or “unpickling error” with try/except and initialize an empty list if needed.
-### 3. File Processing
-Your program reads and writes data from disk using the Python pickle module (or similar).
-- __Input / Loading__: At startup, the program attempts to open a pickle file (e.g. laptops.pkl) to load the existing list of laptop objects. If the file doesn’t exist or is corrupted, it initializes an empty list.
-- __Output / Saving__: After operations that mutate the inventory (delete, possibly additions if you add that later), the program writes the updated list back to the pickle file.
-- The persistence ensures that when the program is restarted, all prior changes remain intact.
+## Project Requirements
+
+| Category | Requirement Description | Implementation Details / Citation |
+| :--- | :--- | :--- |
+| **1. Interactive App (Console Input)** | **Main Menu System** | The application must feature a menu requiring console input in `main.py`. |
+| | **Function Execution** | Based on the user’s selection, the program must call the corresponding function (display, create, delete, filter). |
+| **2. Data Validation** | **Menu Choice Validation** | Check whether the user’s input is a digit and corresponds to a valid menu option. |
+| | **Imputed Data Validation** | Validate imputed data when adding a new laptop (e.g., ensuring RAM input is a valid integer). |
+| | **Pickle File Handling** | When loading the pickled file, handle errors such as "file not found" or "unpickling error" using a `try/except` block, and initialize an empty list if needed. |
+| **3. File Processing** | **Loading Data (Input)** | At startup, the program must attempt to open a pickle file (`inventory.pkl`) to load the existing list of laptop objects. |
+| | **Saving Data (Output)** | After operations that modify the inventory (delete, create), the program must write the updated list back to the pickle file. |
+| | **Data Persistence** | The file processing ensures that when the program is restarted, all prior changes remain intact. |
