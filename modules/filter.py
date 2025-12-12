@@ -44,9 +44,10 @@ def filter_laptops():
     """
     Provide a menu for filtering the laptop inventory by various criteria.
     """
-    print("\n==============================")
-    print("     FILTER LAPTOP INVENTORY")
-    print("==============================\n")
+    print("\n======================================================")
+    print("              FILTER LAPTOP INVENTORY")
+    print("To exit filtering, enter 'back' or 'exit' at any time")
+    print("======================================================\n")
 
     laptops = load_inventory()
     if not laptops:

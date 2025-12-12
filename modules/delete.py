@@ -18,9 +18,10 @@ def delete_laptop():
 
     display_inventory()
 
-    print("\n==============================")
-    print("     REMOVE LAPTOP FROM INVENTORY")
-    print("==============================\n")
+    print("\n====================================================")
+    print("           REMOVE LAPTOP FROM INVENTORY")
+    print("To exit deletion, enter 'back' or 'exit' at any time")
+    print("====================================================\n")
 
     existing_ids = [laptop.get("id") for laptop in laptops]
 

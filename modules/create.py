@@ -10,9 +10,10 @@ def create_laptop():
     Handle user interaction for creating a new laptop entry
     and saving it to the inventory.
     """
-    print("\n==============================")
-    print("     ADD NEW LAPTOP TO INVENTORY")
-    print("==============================\n")
+    print("\n====================================================")
+    print("           ADD NEW LAPTOP TO INVENTORY")
+    print("To exit creation, enter 'back' or 'exit' at any time")
+    print("====================================================\n")
 
     laptops = load_inventory()
     if laptops is None:
