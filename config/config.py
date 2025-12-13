@@ -2,7 +2,7 @@ PICKLE_PATH = "data/inventory.pkl"
 
 ALLOWED_BRANDS = [
     "Dell",
-    "HP",
+    "Hp",
     "Lenovo",
     "Asus",
     "Acer",
