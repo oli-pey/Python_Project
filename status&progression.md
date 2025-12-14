@@ -59,6 +59,7 @@ A notable challenge arose during the implementation of the "flexible navigation"
 | T10 | Implement Filter Menu and `filter_laptops()` logic (single and combo criteria). | Display/Filter | **Completed** |
 | T11 | Implement flexible navigation ('back'/'exit') across all inputs. | Display/Filter | **Completed** |
 | T12 | Final integration of all functions into `main()` menu loop and comprehensive testing. | Finalization | **Completed** |
+| T13 | Commenting all code and meeting PEP 8 Guidelines | Finalization | **Completed** |
 
 ---
 
@@ -69,6 +70,6 @@ A notable challenge arose during the implementation of the "flexible navigation"
 | **Oct 15, 2025** | T1, T2, T3 | **Setup & Persistence Layer Established.** Defined the core data structure (T1). Successfully implemented the persistence layer using `pickle`, including robust error handling (`load_inventory` T2) and saving changes (`save_inventory` T3). |
 | **Nov 5, 2025** | T4, T5, T6, T7 | **Core Modification Logic Complete (3-Week Period).** Implemented all input validation logic (T4, T5), enforcing rules like unique 4-digit ID and multiples of 8GB/256GB. Both the `create_laptop()` (T6) and `delete_laptop()` (T7) functions are fully functional and tested. |
 | **Nov 26, 2025** | T8, T9, T10 | **Display and Filtering Functions Complete (3-Week Period).** Implemented the formatted table output via `print_laptop_list()` (T8). Completed the `display_inventory()` (T9) and the comprehensive `filter_laptops()` function (T10), which supports all required single and combined criteria searches. |
-| **Dec 10, 2025** | T11, T12 | **Final Integration and Quality Assurance (2-Week Period).** Successfully implemented the challenging flexible navigation requirement (T11), requiring refactoring to ensure safe exit across all nested inputs. Completed final integration into `main.py` (T12) and passed all comprehensive testing. **Project Complete.** |
+| **Dec 10, 2025** | T11, T12, T13 | **Final Integration and Quality Assurance (2-Week Period).** Successfully implemented the challenging flexible navigation requirement (T11), requiring refactoring to ensure safe exit across all nested inputs. Completed final integration into `main.py` (T12) and passed all comprehensive testing. **Project Complete.** |
 
 ---
