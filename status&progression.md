@@ -36,8 +36,10 @@ The application must support the following core functionalities:
 
 A notable challenge arose during the implementation of the "Flexible navigation" requirement (T11), which mandated the user must be able to type 'back' or 'exit' at any input prompt to cancel the operation and return to the main menu.
 
-* **Problem:** The `create_laptop()` function is heavily structured with sequential calls to multiple nested validation helper functions (e.g., `laptop_id_input()`, `brand_input()`, `model_input()`, etc.). Implementing 'back' required each of these seven nested functions to return a consistent signal (`None`) upon cancellation, and required refactoring the main `create_laptop()` function to check for this signal after every single input to prevent the next input function from executing prematurely.
-* **Resolution:** A dedicated refactoring effort was required to enforce this flow. All helper functions were standardized to return `None` on 'back'/'exit', and the `create_laptop()` function was updated with `if result is None: return` checks after every helper call, ensuring a clean and immediate return to the main menu upon user cancellation.
+A notable challenge arose during the implementation of the "flexible navigation" requirement (T11), which required that users be able to type 'back' or 'exit' at any input prompt to cancel the operation and return to the main menu.
+
+* The **Problem:** was that the `create_laptop()` function was heavily structured with sequential calls to multiple nested validation helper functions (e.g., `laptop_id_input()`, `brand_input()`, `model_input()`, etc.). Implementing 'back' required each of these seven nested functions to return a consistent signal (`None`) upon cancellation. It also required refactoring the main `create_laptop()` function to check for this signal after every input, preventing the next input function from executing prematurely.
+* **Resolution:** A dedicated refactoring effort was required to enforce this flow. All helper functions were standardized to return `None` upon 'back' or 'exit', and the `create_laptop()` function was updated to include `"if result is None: return"` after every helper call. This ensures a clean and immediate return to the main menu when the user cancels.
 
 ---
 
